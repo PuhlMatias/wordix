@@ -87,7 +87,7 @@ include_once("wordix.php");
            echo "\nOPCION>>> ";
            $opcion = trim(fgets(STDIN));
         
-           // Validar opción
+           // Validar que la opción sea correcta
            if ($opcion < 1 || $opcion > 8) {
            echo "\nOpcion incorrecta. Intente de nuevo (entre 1-8).\n";
         }
@@ -150,51 +150,44 @@ include_once("wordix.php");
 */
 
 function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
-   {
-         // boolean $repetida
-         // int $i, $contArreglo
-         // string $verificacionPalabra
+{
+    // Asignamos la condición false para la repetición
+    $repetida = false;
+    
+    // Verificamos si la palabra es válida
+    $verificacionPalabra = esPalabra($palabraNueva);
+    
+    // Si la palabra no es válida o no tiene 5 caracteres, pedimos una palabra válida
+    if ($verificacionPalabra == false || strlen($palabraNueva) != 5) {
+        echo escribirRojo("Palabra incorrecta."). "\n";
+        $palabraNueva = leerPalabra5Letras(); // Pedir palabra válida
+    }
 
-         // Asignamos a una variable la condición false
-         $repetida = false;
-         
-         // Iniciamos una variable en 0
-         $i = 0;
-         
-         // Contamos el total de elementos del arreglo
-         $contArreglo = count($coleccionPalabrasNuevo);
-         
-         // Verificamos si la palabra es correcta con el modulo de WORDIX
-         $verificacionPalabra = esPalabra($palabraNueva);
-         
-         // Creamos un if donde verificamos si la palabra es incorrecta o la palabra tiene mas de 5 letras 
-         if($verificacionPalabra == false || strlen($palabraNueva) != 5)
-                {
-                     // Mostramos un mensaje de palabra incorrecta
-                     echo escribirRojo("Palabra incorrecta."."\n");
+    // Comprobamos si la palabra ya está en la colección
+    while (!$repetida) {
+        // Verificar si la palabra ya está en la colección
+        foreach ($coleccionPalabrasNuevo as $palabra) {
+            if ($palabra == $palabraNueva) {
+                echo escribirRojo("Esta palabra ya está en la colección. Intente con otra."). "\n";
+                // Si la palabra es repetida, pedimos una nueva palabra
+                $palabraNueva = leerPalabra5Letras();
 
-                     // Llamamos al modulo de WORDIX donde solicita una palabra de 5 letras
-                     $palabraNueva = leerPalabra5Letras();
-                }
-            
+                // Reiniciar la comprobación
+                $repetida = false; 
+                break; // Salir del bucle y volver a comprobar
+            } else {
+                // Si la palabra no es repetida, podemos agregarla
+                $repetida = true;
+            }
+        }
+    }
 
-         while (!$repetida && $i < $contArreglo)
-                {
-                    if($coleccionPalabrasNuevo[$i] == $palabraNueva)
-                      {
-                       echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra."."\n");
-                       $palabraNueva = leerPalabra5Letras($palabraNueva);
-                       $repetida = true;
-                      
-                      }
-                      $i++;
-                 }
-  
-        $coleccionPalabrasNuevo[$contArreglo] = $palabraNueva;
-        
-        return $coleccionPalabrasNuevo;
+    // Agregar la palabra nueva a la colección
+    $coleccionPalabrasNuevo[] = $palabraNueva;
 
-   }
+    // Retornar la colección actualizada
+    return $coleccionPalabrasNuevo;
+}
   
 
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
