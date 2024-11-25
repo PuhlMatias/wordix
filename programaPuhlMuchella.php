@@ -45,6 +45,8 @@ include_once("wordix.php");
    */
   function cargarPartidas()
    {
+       // string[] $arrayPartidas
+
        //Creamos un arreglo de ejemplos de partidas
        $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "Matias", "intentos"=> 5, "puntaje" =>4 ];
        $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "Abril", "intentos"=> 6, "puntaje" =>7 ];
@@ -105,12 +107,22 @@ include_once("wordix.php");
 
    function mostrarPartida($numeroPartida)
        {
+          // string[] $llamarMod
+          // int $numeroTotalDeArreglo
+          // boolean $terminar
+
+          // LLamamos al modulo de partidas
           $llamarMod = cargarPartidas();
-
+          
+          // Contamos el total de elementos del arreglo
           $numeroTotalDeArreglo = count($llamarMod);
-
+          
+          // Asignamos a una variable la condición false
           $terminar = false;
+
+          // Armamos un do while para que se repita en caso que el numero de partida no sea el correcto
           do{
+                // Comprobamos si el numero esta en el rango de elemntos de nuestra colección de partidas
                 if($numeroPartida == 0 || $numeroPartida < $numeroTotalDeArreglo)
                 {
                      echo "*****************************************************"."\n";
@@ -119,9 +131,11 @@ include_once("wordix.php");
                      echo "Puntaje: " . $llamarMod[$numeroPartida]["puntaje"]. " puntos"."\n";
                      echo "Intento: " . $llamarMod[$numeroPartida]["intentos"]."\n";
                      echo "*****************************************************";
-
+                     
+                     // Cambiamos la variable a true para terminar el while
                      $terminar = true;
                 }else{
+                     // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
                      $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo);
                 }
             }while($terminar == false);
@@ -137,26 +151,38 @@ include_once("wordix.php");
 
 function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
    {
+         // boolean $repetida
+         // int $i, $contArreglo
+         // string $verificacionPalabra
+
+         // Asignamos a una variable la condición false
          $repetida = false;
-
-          $i = 0;
-
+         
+         // Iniciamos una variable en 0
+         $i = 0;
+         
+         // Contamos el total de elementos del arreglo
          $contArreglo = count($coleccionPalabrasNuevo);
-
+         
+         // Verificamos si la palabra es correcta con el modulo de WORDIX
          $verificacionPalabra = esPalabra($palabraNueva);
-
+         
+         // Creamos un if donde verificamos si la palabra es incorrecta o la palabra tiene mas de 5 letras 
          if($verificacionPalabra == false || strlen($palabraNueva) != 5)
                 {
-                     echo "Palabra incorrecta."."\n";
+                     // Mostramos un mensaje de palabra incorrecta
+                     echo escribirRojo("Palabra incorrecta."."\n");
+
+                     // Llamamos al modulo de WORDIX donde solicita una palabra de 5 letras
                      $palabraNueva = leerPalabra5Letras();
                 }
             
 
-                while (!$repetida && $i < $contArreglo)
+         while (!$repetida && $i < $contArreglo)
                 {
                     if($coleccionPalabrasNuevo[$i] == $palabraNueva)
                       {
-                       echo "Esta palabra ya esta en la colección. Intente con otra."."\n";
+                       echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra."."\n");
                        $palabraNueva = leerPalabra5Letras($palabraNueva);
                        $repetida = true;
                       
