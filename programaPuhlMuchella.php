@@ -134,7 +134,7 @@ include_once("wordix.php");
                      
                      // Cambiamos la variable a true para terminar el while
                      $terminar = true;
-                }else{
+                } else {
                      // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
                      $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo);
                 }
@@ -145,50 +145,81 @@ include_once("wordix.php");
 
 /** Esta funcion agrega una palabra nueva a una colección y retorna la colección actualizada
  * @param string[] $coleccionPalabrasNuevo
- * @param string $palabra
+ * @param string $palabraNueva
  * @return array
 */
 
 function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
 {
-    // Asignamos la condición false para la repetición
-    $repetida = false;
-    
-    // Verificamos si la palabra es válida
-    $verificacionPalabra = esPalabra($palabraNueva);
-    
-    // Si la palabra no es válida o no tiene 5 caracteres, pedimos una palabra válida
-    if ($verificacionPalabra == false || strlen($palabraNueva) != 5) {
-        echo escribirRojo("Palabra incorrecta."). "\n";
-        $palabraNueva = leerPalabra5Letras(); // Pedir palabra válida
-    }
+    // int $i, $contArreglo
+    // boolean $repetida, $verificacionPalabra
 
-    // Comprobamos si la palabra ya está en la colección
-    while (!$repetida) {
-        // Verificar si la palabra ya está en la colección
-        foreach ($coleccionPalabrasNuevo as $palabra) {
-            if ($palabra == $palabraNueva) {
-                echo escribirRojo("Esta palabra ya está en la colección. Intente con otra."). "\n";
-                // Si la palabra es repetida, pedimos una nueva palabra
-                $palabraNueva = leerPalabra5Letras();
-
-                // Reiniciar la comprobación
-                $repetida = false; 
-                break; // Salir del bucle y volver a comprobar
-            } else {
-                // Si la palabra no es repetida, podemos agregarla
-                $repetida = true;
+    // Variable iniciada en 0
+    $i = 0;      
+    // Contamos el total del arreglo 
+    $contArreglo = count($coleccionPalabrasNuevo);
+    // Verificamos la palabra
+    do{
+     // Iniciamos una variable en falso
+     $repetida = false;      
+     // Verificamos si la palabra es una palabra con el modulo de WORDIX
+     $verificacionPalabra = esPalabra($palabraNueva);    
+     // Si la verificacion es falsa pide una palabra nueva
+     if($verificacionPalabra == false || strlen($palabraNueva) != 5)
+        {
+            // Mostramos un error en la palabra
+            echo escribirRojo("Palabra incorrecta.")."\n";
+            // Solicitamos palabra nueva con el modulo de WORDIX
+            $palabraNueva = leerPalabra5Letras();
+            // Cambiamos la variable repetida a true
+            $repetida = true;
+        } else // Si la verificacion es verdadera, verificamos que la palabra no este en la colección
+        {
+            // Bucle que verifica la palabra
+            while ($i < $contArreglo && $repetida == false)
+            {
+                // Verificamos si son iguales
+                if($coleccionPalabrasNuevo[$i] == strtoupper($palabraNueva))
+                    {
+                        // Si son iguales cambiamos la variable repetida a true
+                        $repetida = true;
+                        // Volvemos la variable $i a 0
+                        $i = 0;
+                    } else {
+                        // Si son desiguales sumamos la variable $i
+                        $i++;
+                    }
+                // Solicitamos otra palabra en caso que sea repetida    
+                if($repetida == true)
+                    {
+                        echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
+                        $palabraNueva = leerPalabra5Letras($palabraNueva);
+                    }
             }
         }
-    }
+                
+    }while($repetida == true);
+       // Agregamos la palabra a la nueva coleccion
+       $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
+       
+       // Retornamos la coleccion
+       return $coleccionPalabrasNuevo;
 
-    // Agregar la palabra nueva a la colección
-    $coleccionPalabrasNuevo[] = $palabraNueva;
-
-    // Retornar la colección actualizada
-    return $coleccionPalabrasNuevo;
 }
-  
+
+echo "Palabra: ";
+$r = trim(fgets(STDIN));
+
+$g = cargarColeccionPalabras();
+
+$e = agregarPalabra($g, $r);
+
+print_r($e);
+
+
+
+
+
 
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
 
