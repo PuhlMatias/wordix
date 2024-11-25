@@ -71,29 +71,29 @@ include_once("wordix.php");
 
  function seleccionarOpcion()
  {
-         // Creamos el menu de opciones
-         do{
-         echo "\n"."************MENU DE OPCIONES************"."\n";
-         echo "\n"."1) Jugar al wordix con una palabra elegida"."\n";
-         echo "2) Jugar al wordix con una palabra aleatoria"."\n";
-         echo "3) Mostrar una partida"."\n";
-         echo "4) Mostrar la primer partida ganadora"."\n";
-         echo "5) Mostrar resumen de Jugador"."\n";
-         echo "6) Mostrar listado de partidas ordenadas por jugador y por palabra"."\n";
-         echo "7) Agregar una palabra de 5 letras a Wordix"."\n";
-         echo "8) Salir"."\n";
+    do {
+           // Mostrar menú de opciones
+           echo "\n************MENU DE OPCIONES************\n";
+           echo "1) Jugar al wordix con una palabra elegida\n";
+           echo "2) Jugar al wordix con una palabra aleatoria\n";
+           echo "3) Mostrar una partida\n";
+           echo "4) Mostrar la primer partida ganadora\n";
+           echo "5) Mostrar resumen de Jugador\n";
+           echo "6) Mostrar listado de partidas ordenadas por jugador y por palabra\n";
+           echo "7) Agregar una palabra de 5 letras a Wordix\n";
+           echo "8) Salir\n";
 
-         // Solicitamos una opcion 
-         echo "\n"."OPCION>>> ";
-         $opcion = trim(fgets(STDIN));
-         
-         // Armamos un if por si la opcion es incorrecta
-         if($opcion > 8 || $opcion < 1)
-         echo "\n"."Opcion incorrecta. Intente de nuevo (entre 1-8)."."\n";
-                        
-         
-         }while ($opcion != 8);            
-    }
+           // Solicitar opción 
+           echo "\nOPCION>>> ";
+           $opcion = trim(fgets(STDIN));
+        
+           // Validar opción
+           if ($opcion < 1 || $opcion > 8) {
+           echo "\nOpcion incorrecta. Intente de nuevo (entre 1-8).\n";
+        }
+        
+        } while ($opcion != 8);            
+ }
  
  
 // FUNCIÓN 4 leerPalabra5Letras (WORDIX)
