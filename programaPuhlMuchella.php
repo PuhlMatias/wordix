@@ -65,7 +65,6 @@ include_once("wordix.php");
 // FUNCIÓN 3 MENU DE OPCIONES
 
     /** Este modulo muestra un menu de opciones
-    * @return string
     */
 
  function seleccionarOpcion()
@@ -102,7 +101,6 @@ include_once("wordix.php");
 
   /** Este modulo recibe un numero y muestra por pantalla una partida
    * @param int $numeroPartida
-   * @return string
    */
 
    function mostrarPartida($numeroPartida)
@@ -139,25 +137,39 @@ include_once("wordix.php");
 
 function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
    {
-    $repetida = false;
+         $repetida = false;
 
-    $i = 0;
+          $i = 0;
 
-    $contArreglo = count($coleccionPalabrasNuevo);
+         $contArreglo = count($coleccionPalabrasNuevo);
 
-    while (!$repetida && $i < $contArreglo)
-     {
-        if($coleccionPalabrasNuevo[$i] == $palabraNueva)
-          {
-            echo "Esta palabra ya esta en la colección. Intente con otra.";
-            $repetida = true;
-          }
-     }
-     $coleccionPalabrasNuevo[$contArreglo+1] = $palabraNueva;
+         $verificacionPalabra = esPalabra($palabraNueva);
 
-     return $coleccionPalabrasNuevo;
+         if($verificacionPalabra == false || strlen($palabraNueva) != 5)
+                {
+                     echo "Palabra incorrecta."."\n";
+                     $palabraNueva = leerPalabra5Letras();
+                }
+            
+
+                while (!$repetida && $i < $contArreglo)
+                {
+                    if($coleccionPalabrasNuevo[$i] == $palabraNueva)
+                      {
+                       echo "Esta palabra ya esta en la colección. Intente con otra."."\n";
+                       $palabraNueva = leerPalabra5Letras($palabraNueva);
+                       $repetida = true;
+                      
+                      }
+                      $i++;
+                 }
+  
+        $coleccionPalabrasNuevo[$contArreglo] = $palabraNueva;
+        
+        return $coleccionPalabrasNuevo;
+
    }
-
+  
 
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
 
