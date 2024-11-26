@@ -72,7 +72,8 @@ include_once("wordix.php");
 
  function seleccionarOpcion()
  {
-    
+        // int $numeroOpcion
+        
         // Mostrar menú de opciones
         echo "\n************MENU DE OPCIONES************\n";
         echo "1) Jugar al wordix con una palabra elegida\n";
@@ -85,12 +86,13 @@ include_once("wordix.php");
         echo "8) Salir\n";      
            
         // Solicitar opción
+        echo "\nOPCIÓN>>> ";
         $numeroOpcion = solicitarNumeroEntre(1, 8);
 
         // Retornamos la opcion
         return $numeroOpcion;
  }
- 
+
  
 // FUNCIÓN 4 leerPalabra5Letras (WORDIX)
 // FUNCIÓN 5 solicitarNumeroEntre (WORDIX)
@@ -131,11 +133,21 @@ include_once("wordix.php");
                      // Cambiamos la variable a true para terminar el while
                      $terminar = true;
                 } else {
+                     echo escribirRojo("Número incorrecto.")."\n";
+                     // Solicitamos otro numero 
+                     echo "Ingrese un número entre " . 0 . " y " . $numeroTotalDeArreglo . ": ";
                      // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
                      $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo);
                 }
             }while($terminar == false);
         }
+
+   /*     echo "num partida: ";
+        $n = trim(fgets(STDIN));
+
+     mostrarPartida($n);*/
+
+       
 
 // FUNCIÓN 7 AGREGAR PALABRA
 
@@ -193,12 +205,12 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
         }
                 
     }while($repetida == true);
-       // Agregamos la palabra a la nueva coleccion
-     if($verificacionPalabra == false || strlen($palabraNueva) != 5)
-       $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
+
+     // Agregamos la palabra a la nueva coleccion
+     $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
        
-       // Retornamos la coleccion
-       return $coleccionPalabrasNuevo;
+     // Retornamos la coleccion
+     return $coleccionPalabrasNuevo;
 
 }
 
@@ -316,7 +328,7 @@ print_r($k);*/
     return $estadisticasJugador;
     
  }
-
+/*
  $z = cargarPartidas();
  echo "Nombre: ";
  $x = trim(fgets(STDIN));
@@ -325,6 +337,36 @@ print_r($k);*/
 
  print_r($c);
 
+*/
+// FUNCIÓN 10 SOLICITAR NOMBRE 
+
+/**
+ * 
+ */
+
+ function  solicitarJugador()
+ {
+   
+    do{
+        $correcto = false;
+        echo "Ingrese el nombre de un jugador: ";
+        $jugador = trim(fgets(STDIN));
+
+        $caracteres = str_split($jugador, 1);
+
+        $esLetra = ctype_alpha($caracteres[0]);
+
+        if($esLetra == true){
+            $correcto = true;
+        }else{
+            echo escribirRojo("El primer caracter debe ser una letra")."\n";
+        }
+
+
+    }while($correcto == false);
+
+    return $jugador;
+ }
 
 
 /* ****COMPLETAR***** */
