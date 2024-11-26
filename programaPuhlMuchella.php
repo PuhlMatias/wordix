@@ -48,17 +48,17 @@ include_once("wordix.php");
        // string[] $arrayPartidas
 
        //Creamos un arreglo de ejemplos de partidas
-       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "Matias", "intentos"=> 5, "puntaje" =>4 ];
-       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "Abril", "intentos"=> 6, "puntaje" =>7 ];
-       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "Agustin", "intentos"=> 3, "puntaje" =>10 ];
-       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "Lauty", "intentos"=> 4, "puntaje" =>6 ];
-       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "Martin", "intentos"=> 6, "puntaje" =>5 ];
-       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "Ciro", "intentos"=> 2, "puntaje" =>2 ];
-       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "Ezequiel", "intentos"=> 6, "puntaje" =>3 ];
-       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "Juan", "intentos"=> 5, "puntaje" =>11 ];
-       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "Martina", "intentos"=> 3, "puntaje" =>9 ];
-       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "Matias", "intentos"=> 1, "puntaje" =>10 ];
-       $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "Agustin", "intentos"=> 4, "puntaje" =>9 ];
+       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>4 ];
+       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>7 ];
+       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>10 ];
+       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>6 ];
+       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>5 ];
+       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "ciro", "intentos"=> 2, "puntaje" =>2 ];
+       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "ezequiel", "intentos"=> 6, "puntaje" =>3 ];
+       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "juan", "intentos"=> 5, "puntaje" =>11 ];
+       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "martina", "intentos"=> 3, "puntaje" =>9 ];
+       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 1, "puntaje" =>10 ];
+       $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "agustin", "intentos"=> 4, "puntaje" =>9 ];
     
        // Retornamos el arreglo
        return $arrayPartidas;
@@ -185,21 +185,20 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
                         $repetida = true;
                         // Volvemos la variable $i a 0
                         $i = 0;
+
+                        // Mostramos un cartel que la palabra esta repetida y volvemos a solicitar otra palabra
+                        echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
+                        $palabraNueva = leerPalabra5Letras($palabraNueva);
                     } else {
                         // Si son desiguales sumamos la variable $i
                         $i++;
-                    }
-                // Solicitamos otra palabra en caso que sea repetida    
-                if($repetida == true)
-                    {
-                        echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
-                        $palabraNueva = leerPalabra5Letras($palabraNueva);
                     }
             }
         }
                 
     }while($repetida == true);
        // Agregamos la palabra a la nueva coleccion
+     if($verificacionPalabra == false || strlen($palabraNueva) != 5)
        $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
        
        // Retornamos la coleccion
@@ -207,14 +206,14 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
 
 }
 
-echo "Palabra: ";
+/*echo "Palabra: ";
 $r = trim(fgets(STDIN));
 
 $g = cargarColeccionPalabras();
 
 $e = agregarPalabra($g, $r);
 
-print_r($e);
+print_r($e);*/
 
 
 
@@ -244,6 +243,16 @@ print_r($e);
     }
     return $indice;
  }
+
+$f = cargarPartidas();
+echo "Ingrese un nombre para ver su primer partida ganada: ";
+$m = trim(fgets(STDIN));
+
+$k = primerPartidaGanada($f, $m);
+
+print_r($k);
+
+
 
 /* ****COMPLETAR***** */
 
