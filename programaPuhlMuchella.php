@@ -48,16 +48,16 @@ include_once("wordix.php");
        // string[] $arrayPartidas
 
        //Creamos un arreglo de ejemplos de partidas
-       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>4 ];
+       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>0 ];
        $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>7 ];
-       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>10 ];
-       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>6 ];
-       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>5 ];
-       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "ciro", "intentos"=> 2, "puntaje" =>2 ];
-       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "ezequiel", "intentos"=> 6, "puntaje" =>3 ];
+       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>13 ];
+       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>12 ];
+       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>6 ];
+       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "ciro", "intentos"=> 2, "puntaje" =>16 ];
+       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "ezequiel", "intentos"=> 6, "puntaje" =>0 ];
        $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "juan", "intentos"=> 5, "puntaje" =>11 ];
        $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "martina", "intentos"=> 3, "puntaje" =>9 ];
-       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 1, "puntaje" =>10 ];
+       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 1, "puntaje" =>15 ];
        $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "agustin", "intentos"=> 4, "puntaje" =>9 ];
     
        // Retornamos el arreglo
@@ -230,27 +230,73 @@ print_r($e);*/
  {
     $indice = -1;
     $i = 0;
+    $a = 0;
     $contPartidas = count($arrayPartidas);
     $encontrado = false;
     while ($i < $contPartidas && !$encontrado)
     {
-        if($arrayPartidas[$i]["jugador"] == $nombreJugador && $arrayPartidas[$i]["puntos"] > 0)
+        if($arrayPartidas[$i]["jugador"] == strtolower($nombreJugador) && $arrayPartidas[$i]["puntaje"] > 0)
         {
             $indice = $i;
             $encontrado = true;
+        }elseif($arrayPartidas[$i]["jugador"] != $nombreJugador){
+            $a++;
         }
         $i++;
+    }
+
+    if ($a == $contPartidas && $encontrado == false){
+     $indice = -2;
     }
     return $indice;
  }
 
-$f = cargarPartidas();
+/*$f = cargarPartidas();
 echo "Ingrese un nombre para ver su primer partida ganada: ";
 $m = trim(fgets(STDIN));
 
 $k = primerPartidaGanada($f, $m);
 
-print_r($k);
+print_r($k);*/
+
+// FUNCIÓN 9 RESUMEN JUGADOR
+
+/**
+ * 
+ */
+
+ function mostrarResumen($arrayPartidas, $nombreJugador)
+ {
+    $i = 0;
+    $puntajeTotal = 0;
+    $partidasTotales = 0;
+    $contPartidasGanadas = 0;
+    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0];
+
+    while($nombreJugador == $arrayPartidas[$i]["jugador"]){
+        if($arrayPartidas[$i]["puntaje"] > 0){
+        $contPartidasGanadas++;
+        }
+        $puntaje = $arrayPartidas[$i]["puntaje"];
+        $puntajeTotal += $puntaje;
+
+        $partidasTotales++;
+
+        $estadisticasJugador["jugador"] = $arrayPartidas[$i]["jugador"];
+        $estadisticasJugador["partida"] = $partidasTotales;
+        $estadisticasJugador["puntaje"] = $puntajeTotal;
+        $estadisticasJugador["victorias"] = $contPartidasGanadas;
+        
+
+        
+
+
+    }
+    $estadisticasJugador["jugador"] = $arrayPartidas[$i]["jugador"];
+        $estadisticasJugador["partida"] = $partidasTotales;
+        $estadisticasJugador["puntaje"] = $puntajeTotal;
+        $estadisticasJugador["victorias"] = $contPartidasGanadas;
+ }
 
 
 
