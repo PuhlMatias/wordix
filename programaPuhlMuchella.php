@@ -73,7 +73,7 @@ include_once("wordix.php");
  function seleccionarOpcion()
  {
         // int $numeroOpcion
-        
+
         // Mostrar menú de opciones
         echo "\n************MENU DE OPCIONES************\n";
         echo "1) Jugar al wordix con una palabra elegida\n";
@@ -338,34 +338,38 @@ print_r($k);*/
  print_r($c);
 
 */
+
 // FUNCIÓN 10 SOLICITAR NOMBRE 
 
-/**
- * 
+/** Esta funcion solicita un nombre y lo retora en minúscula
+ * @return string
  */
 
  function  solicitarJugador()
  {
-   
+    // Verificar que el primer caracter sea una letra
     do{
+        // Variable iniciada en falso
         $correcto = false;
+        //Solicitamos el nombre del jugador 
         echo "Ingrese el nombre de un jugador: ";
         $jugador = trim(fgets(STDIN));
-
+        // Dividimos el nombre en caracteres
         $caracteres = str_split($jugador, 1);
-
+        // Comprobar si el primer caracter es una letra
         $esLetra = ctype_alpha($caracteres[0]);
-
+        
+        // Cortar ciclo si es verdadero
         if($esLetra == true){
             $correcto = true;
-        }else{
+        }else{ // Mostrar un cartel y preguntar devuelta si es falso
             echo escribirRojo("El primer caracter debe ser una letra")."\n";
         }
 
 
     }while($correcto == false);
-
-    return $jugador;
+    // Retornamos el nombre en minúscula
+    return strtolower($jugador);
  }
 
 
