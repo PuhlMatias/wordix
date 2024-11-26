@@ -49,15 +49,15 @@ include_once("wordix.php");
 
        //Creamos un arreglo de ejemplos de partidas
        $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>0 ];
-       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>7 ];
+       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>0 ];
        $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>13 ];
        $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>12 ];
        $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>6 ];
-       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "ciro", "intentos"=> 2, "puntaje" =>16 ];
-       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "ezequiel", "intentos"=> 6, "puntaje" =>0 ];
-       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "juan", "intentos"=> 5, "puntaje" =>11 ];
-       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "martina", "intentos"=> 3, "puntaje" =>9 ];
-       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 1, "puntaje" =>15 ];
+       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "abril", "intentos"=> 2, "puntaje" =>16 ];
+       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "lauty", "intentos"=> 6, "puntaje" =>0 ];
+       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "martin", "intentos"=> 5, "puntaje" =>11 ];
+       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "abril", "intentos"=> 3, "puntaje" =>9 ];
+       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 2, "puntaje" =>15 ];
        $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "agustin", "intentos"=> 4, "puntaje" =>9 ];
     
        // Retornamos el arreglo
@@ -66,33 +66,29 @@ include_once("wordix.php");
 
 // FUNCIÓN 3 MENU DE OPCIONES
 
-    /** Este modulo muestra un menu de opciones
-    */
+/** Este modulo muestra un menu de opciones
+ * @return int
+*/
 
  function seleccionarOpcion()
  {
-    do {
-           // Mostrar menú de opciones
-           echo "\n************MENU DE OPCIONES************\n";
-           echo "1) Jugar al wordix con una palabra elegida\n";
-           echo "2) Jugar al wordix con una palabra aleatoria\n";
-           echo "3) Mostrar una partida\n";
-           echo "4) Mostrar la primer partida ganadora\n";
-           echo "5) Mostrar resumen de Jugador\n";
-           echo "6) Mostrar listado de partidas ordenadas por jugador y por palabra\n";
-           echo "7) Agregar una palabra de 5 letras a Wordix\n";
-           echo "8) Salir\n";
+    
+        // Mostrar menú de opciones
+        echo "\n************MENU DE OPCIONES************\n";
+        echo "1) Jugar al wordix con una palabra elegida\n";
+        echo "2) Jugar al wordix con una palabra aleatoria\n";
+        echo "3) Mostrar una partida\n";
+        echo "4) Mostrar la primer partida ganadora\n";
+        echo "5) Mostrar resumen de Jugador\n";
+        echo "6) Mostrar listado de partidas ordenadas por jugador y por palabra\n";
+        echo "7) Agregar una palabra de 5 letras a Wordix\n";
+        echo "8) Salir\n";      
+           
+        // Solicitar opción
+        $numeroOpcion = solicitarNumeroEntre(1, 8);
 
-           // Solicitar opción 
-           echo "\nOPCION>>> ";
-           $opcion = trim(fgets(STDIN));
-        
-           // Validar que la opción sea correcta
-           if ($opcion < 1 || $opcion > 8) {
-           echo "\nOpcion incorrecta. Intente de nuevo (entre 1-8).\n";
-        }
-        
-        } while ($opcion != 8);            
+        // Retornamos la opcion
+        return $numeroOpcion;
  }
  
  
@@ -222,32 +218,51 @@ print_r($e);*/
 
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
 
-/**
- * 
+/** Este modulo muestra la primer partida ganada
+ * @param string[] $arrayPartidas
+ * @param string $nombreJugador
+ * @return string
  */
 
  function primerPartidaGanada($arrayPartidas, $nombreJugador)
  {
+    // int $indice, $i, $a, $contPartidas
+    // boolean $encontrado
+
+    // Iniciamos la variable que vamos a retornar en -1
     $indice = -1;
+    // Iniciamos 2 variables en 0
     $i = 0;
     $a = 0;
+    //Contamos el arreglo
     $contPartidas = count($arrayPartidas);
+    // Iniamos una variable en falso
     $encontrado = false;
+
+    // Verificacion 
     while ($i < $contPartidas && !$encontrado)
     {
+        // Comprobar que el nombre esta en la colección
         if($arrayPartidas[$i]["jugador"] == strtolower($nombreJugador) && $arrayPartidas[$i]["puntaje"] > 0)
         {
+            // Actualizamos las variables
             $indice = $i;
+            // Cambiar variable a true para cortar el while
             $encontrado = true;
-        }elseif($arrayPartidas[$i]["jugador"] != $nombreJugador){
+        }
+        // Sumar la variable a en caso que el nombre no se encuentre en la colección
+        elseif($arrayPartidas[$i]["jugador"] != $nombreJugador){
             $a++;
         }
+        // Sumar variable 
         $i++;
     }
-
+    // Cambiar la variable retornada en caso que el nombre no este en la colección
     if ($a == $contPartidas && $encontrado == false){
      $indice = -2;
     }
+
+    // Retornar la variable
     return $indice;
  }
 
@@ -271,32 +286,44 @@ print_r($k);*/
     $puntajeTotal = 0;
     $partidasTotales = 0;
     $contPartidasGanadas = 0;
-    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0];
+    $contPartidas = count($arrayPartidas);
+    $estadisticasJugador = [ "jugador" =>"", "partida" =>"", "puntaje" =>"",  "victorias" =>""];
 
-    while($nombreJugador == $arrayPartidas[$i]["jugador"]){
-        if($arrayPartidas[$i]["puntaje"] > 0){
+    while($i < $contPartidas)
+    {
+        if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $contPartidasGanadas++;
         }
+        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $puntaje = $arrayPartidas[$i]["puntaje"];
         $puntajeTotal += $puntaje;
+        }
 
+        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $partidasTotales++;
+        }
+        
 
+        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $estadisticasJugador["jugador"] = $arrayPartidas[$i]["jugador"];
         $estadisticasJugador["partida"] = $partidasTotales;
         $estadisticasJugador["puntaje"] = $puntajeTotal;
-        $estadisticasJugador["victorias"] = $contPartidasGanadas;
-        
-
-        
-
+        $estadisticasJugador["victorias"] = $contPartidasGanadas;  
+        }
+        $i++;
 
     }
-    $estadisticasJugador["jugador"] = $arrayPartidas[$i]["jugador"];
-        $estadisticasJugador["partida"] = $partidasTotales;
-        $estadisticasJugador["puntaje"] = $puntajeTotal;
-        $estadisticasJugador["victorias"] = $contPartidasGanadas;
+    return $estadisticasJugador;
+    
  }
+
+ $z = cargarPartidas();
+ echo "Nombre: ";
+ $x = trim(fgets(STDIN));
+
+ $c = mostrarResumen($z, $x);
+
+ print_r($c);
 
 
 
