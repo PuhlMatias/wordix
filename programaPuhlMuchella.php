@@ -224,10 +224,6 @@ $e = agregarPalabra($g, $r);
 print_r($e);*/
 
 
-
-
-
-
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
 
 /** Este modulo muestra la primer partida ganada
@@ -270,7 +266,7 @@ print_r($e);*/
         $i++;
     }
     // Cambiar la variable retornada en caso que el nombre no este en la colección
-    if ($a == $contPartidas && $encontrado == false){
+    if ($a == $contPartidas){
      $indice = -2;
     }
 
