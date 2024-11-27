@@ -294,50 +294,47 @@ print_r($k);*/
 
  function mostrarResumen($arrayPartidas, $nombreJugador)
  {
-    $i = 0;
+    $cont = 0;
     $puntajeTotal = 0;
     $partidasTotales = 0;
     $contPartidasGanadas = 0;
     $contPartidas = count($arrayPartidas);
     $estadisticasJugador = [ "jugador" =>"", "partida" =>"", "puntaje" =>"",  "victorias" =>""];
 
-    while($i < $contPartidas)
+    foreach($arrayPartidas as $i => $elemento)
     {
+
         if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $contPartidasGanadas++;
         }
+
         if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
+       
         $puntaje = $arrayPartidas[$i]["puntaje"];
         $puntajeTotal += $puntaje;
-        }
-
-        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
         $partidasTotales++;
-        }
-        
-
-        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
-        $estadisticasJugador["jugador"] = $arrayPartidas[$i]["jugador"];
-        $estadisticasJugador["partida"] = $partidasTotales;
-        $estadisticasJugador["puntaje"] = $puntajeTotal;
-        $estadisticasJugador["victorias"] = $contPartidasGanadas;  
-        }
-        $i++;
+       
 
     }
-    return $estadisticasJugador;
+}
+        $estadisticasJugador["jugador"] = $nombreJugador;
+        $estadisticasJugador["partida"] = $partidasTotales;
+        $estadisticasJugador["puntaje"] = $puntajeTotal;
+        $estadisticasJugador["victorias"] = $contPartidasGanadas;
+       
+        return $estadisticasJugador;
     
  }
-/*
- $z = cargarPartidas();
+
+ /*$z = cargarPartidas();
  echo "Nombre: ";
  $x = trim(fgets(STDIN));
 
  $c = mostrarResumen($z, $x);
 
- print_r($c);
+ print_r($c);*/
 
-*/
+
 
 // FUNCIÓN 10 SOLICITAR NOMBRE 
 
@@ -371,6 +368,42 @@ print_r($k);*/
     // Retornamos el nombre en minúscula
     return strtolower($jugador);
  }
+
+ // FUNCIÓN 11 ORDENAR ARREGLO
+
+ /**
+  * 
+  */
+
+ function cmp($a,$b)
+ {
+    if ( $a == $b){
+        $orden = 0;
+    }elseif($a < $b){
+        $orden = -1;
+    }else{
+        $orden = 1;
+    }
+    return $orden;
+ }
+
+
+ function mostrarPardasOrdenadas($coleccion) {
+    // Función de comparación para uasort
+    uasort($coleccion, function($a, $b) {
+        // Ordenar primero por el nombre del jugador
+        if ($a['jugador'] === $b['jugador']) {
+            // Si los nombres son iguales, ordenar por la palabra
+            return strcmp($a['palabraWordix'], $b['palabraWordix']);
+        }
+        return strcmp($a['jugador'], $b['jugador']);
+    });
+
+    // Mostrar la colección ordenada
+    print_r($coleccion);
+}
+  $t = cargarPartidas();
+  mostrarPardasOrdenadas($t);
 
 
 /* ****COMPLETAR***** */
