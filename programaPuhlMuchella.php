@@ -196,7 +196,7 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
 
                         // Mostramos un cartel que la palabra esta repetida y volvemos a solicitar otra palabra
                         echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
-                        $palabraNueva = leerPalabra5Letras($palabraNueva);
+                        $palabraNueva = leerPalabra5Letras();
                     } else {
                         // Si son desiguales sumamos la variable $i
                         $i++;
@@ -294,29 +294,44 @@ print_r($k);*/
 
  function mostrarResumen($arrayPartidas, $nombreJugador)
  {
-    $cont = 0;
+  
     $puntajeTotal = 0;
     $partidasTotales = 0;
     $contPartidasGanadas = 0;
     $contPartidas = count($arrayPartidas);
-    $estadisticasJugador = [ "jugador" =>"", "partida" =>"", "puntaje" =>"",  "victorias" =>""];
+    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0, "intento1" =>0, "intento2" =>0, "intento3" =>0, "intento4" =>0, "intento5" =>0, "intento6" =>0];
 
-    foreach($arrayPartidas as $i => $elemento)
+    for($i=0; $i<$contPartidas; $i++)
     {
 
-        if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
-        $contPartidasGanadas++;
+        if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
+        {
+             $contPartidasGanadas++;
         }
+        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
+        {  
+             $puntaje = $arrayPartidas[$i]["puntaje"];
+             $puntajeTotal += $puntaje;
+             $partidasTotales++;
 
-        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"]){
-       
-        $puntaje = $arrayPartidas[$i]["puntaje"];
-        $puntajeTotal += $puntaje;
-        $partidasTotales++;
-       
-
+             switch($arrayPartidas[$i]["intentos"]){ //segun el numero que me devuelve lo que haya en esa posicion: 
+                case 1:$estadisticasJugador["intento1"]++;
+                break;
+                case 2:$estadisticasJugador["intento2"]++;
+                break;
+                case 3:$estadisticasJugador["intento3"]++;
+                break;
+                case 4:$estadisticasJugador["intento4"]++;
+                break;
+                case 5:$estadisticasJugador["intento5"]++;
+                break;
+                case 6:$estadisticasJugador["intento6"] ++;
+                break; 
+            }
+        }
+     
+        
     }
-}
         $estadisticasJugador["jugador"] = $nombreJugador;
         $estadisticasJugador["partida"] = $partidasTotales;
         $estadisticasJugador["puntaje"] = $puntajeTotal;
@@ -326,13 +341,13 @@ print_r($k);*/
     
  }
 
- /*$z = cargarPartidas();
+ $z = cargarPartidas();
  echo "Nombre: ";
  $x = trim(fgets(STDIN));
 
  $c = mostrarResumen($z, $x);
 
- print_r($c);*/
+ print_r($c);
 
 
 
@@ -375,35 +390,34 @@ print_r($k);*/
   * 
   */
 
- function cmp($a,$b)
- {
-    if ( $a == $b){
-        $orden = 0;
-    }elseif($a < $b){
-        $orden = -1;
-    }else{
-        $orden = 1;
-    }
-    return $orden;
- }
-
-
- function mostrarPardasOrdenadas($coleccion) {
-    // Función de comparación para uasort
-    uasort($coleccion, function($a, $b) {
-        // Ordenar primero por el nombre del jugador
-        if ($a['jugador'] === $b['jugador']) {
-            // Si los nombres son iguales, ordenar por la palabra
-            return strcmp($a['palabraWordix'], $b['palabraWordix']);
-        }
-        return strcmp($a['jugador'], $b['jugador']);
-    });
-
-    // Mostrar la colección ordenada
-    print_r($coleccion);
-}
-  $t = cargarPartidas();
-  mostrarPardasOrdenadas($t);
+  function compararPartidas($partidaUno, $partidaDos)
+  {
+      if ($partidaUno["jugador"] == $partidaDos["jugador"]) {
+          if ($partidaUno["palabraWordix"] == $partidaDos["palabraWordix"]) {
+              $orden = 0;
+          } elseif ($partidaUno["palabraWordix"] < $partidaDos["palabraWordix"]) {
+              $orden = -1;
+          } else {
+              $orden = 1;
+          }
+      } elseif ($partidaUno["jugador"] < $partidaDos["jugador"]) {
+          $orden = -1;
+      } else {
+          $orden = 1;
+      }
+      return $orden;
+  }
+  
+  
+  function mostrarPartidasOrdenadas($coleccion)
+  {
+      // Función de comparación para uasort
+      uasort($coleccion, 'compararPartidas');
+      // Mostrar la colección ordenada
+      print_r($coleccion);
+  }
+  /*$t = cargarPartidas();
+  mostrarPartidasOrdenadas($t);*/
 
 
 /* ****COMPLETAR***** */
@@ -421,7 +435,7 @@ print_r($k);*/
 
 //Proceso:
 
-$partida = jugarWordix("MELON", strtolower("MaJo"));
+//$partida = jugarWordix("MELON", strtolower("MaJo"));
 //print_r($partida);
 //imprimirResultado($partida);
 
@@ -429,7 +443,7 @@ $partida = jugarWordix("MELON", strtolower("MaJo"));
 
 /*
 do {
-    $opcion = ...;
+    $opcion = seleccionarOpcion();
 
     
     switch ($opcion) {
@@ -445,8 +459,27 @@ do {
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
 
             break;
-        
+        case 4: 
             //...
+
+            break;
+        case 5:
+            //
+
+            break;
+        case 6: 
+            //
+
+            break;
+        case 7:
+            //
+
+            break;
+        case 8: 
+            // Mostrar cartel de saliendo
+            echo "Saliendo...";
+            break;
     }
-} while ($opcion != X);
+} while ($opcion != 8);
+
 */
