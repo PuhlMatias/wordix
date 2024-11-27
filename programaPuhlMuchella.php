@@ -288,32 +288,42 @@ print_r($k);*/
 
 // FUNCIÓN 9 RESUMEN JUGADOR
 
-/**
- * 
+/** Esta función muestra el resumen de un jugador
+ * @param string[] $arrayPartidas
+ * @param string $nombreJugador
+ * @return array
  */
 
  function mostrarResumen($arrayPartidas, $nombreJugador)
  {
-  
+    // Inicializamos variables en 0
     $puntajeTotal = 0;
     $partidasTotales = 0;
     $contPartidasGanadas = 0;
-    $contPartidas = count($arrayPartidas);
-    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0, "intento1" =>0, "intento2" =>0, "intento3" =>0, "intento4" =>0, "intento5" =>0, "intento6" =>0];
 
+    // Contamos el total de la colección
+    $contPartidas = count($arrayPartidas);
+    // Creamos el arreglo iniciado en 0 para despues cambiarlo
+    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0, "intento1" =>0, "intento2" =>0, "intento3" =>0, "intento4" =>0, "intento5" =>0, "intento6" =>0];
+    
+    // Recorremos el total del arreglo, sacando las estadisticas
     for($i=0; $i<$contPartidas; $i++)
     {
-
+        // Sumamos la variable contadora si encuentra una partida ganada
         if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
         {
              $contPartidasGanadas++;
         }
+         // Actualizamos variables si el nombre es igual
         if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
-        {  
+        {    // Sumamos el total de los puntajes 
              $puntaje = $arrayPartidas[$i]["puntaje"];
              $puntajeTotal += $puntaje;
+
+             // Sumamos las partidas totales
              $partidasTotales++;
 
+             // Sumamos el intento cada vez que haya ganado uno en el mismo
              switch($arrayPartidas[$i]["intentos"]){ //segun el numero que me devuelve lo que haya en esa posicion: 
                 case 1:$estadisticasJugador["intento1"]++;
                 break;
@@ -328,26 +338,26 @@ print_r($k);*/
                 case 6:$estadisticasJugador["intento6"] ++;
                 break; 
             }
-        }
-     
-        
+        }      
     }
+        // Actualizamos las estadisticas 
         $estadisticasJugador["jugador"] = $nombreJugador;
         $estadisticasJugador["partida"] = $partidasTotales;
         $estadisticasJugador["puntaje"] = $puntajeTotal;
         $estadisticasJugador["victorias"] = $contPartidasGanadas;
        
+        // Retornamos el arreglo
         return $estadisticasJugador;
     
  }
 
- $z = cargarPartidas();
+/* $z = cargarPartidas();
  echo "Nombre: ";
  $x = trim(fgets(STDIN));
 
  $c = mostrarResumen($z, $x);
 
- print_r($c);
+ print_r($c);*/
 
 
 
@@ -386,29 +396,39 @@ print_r($k);*/
 
  // FUNCIÓN 11 ORDENAR ARREGLO
 
- /**
-  * 
+ /** Este recibe un arreglo y retorna el orden en que lo ordena 
+  * @param string[] $partidaUno
+  * @param string[] $partidaDos
+  * @return int
   */
 
   function compararPartidas($partidaUno, $partidaDos)
   {
+      // Si el jugador es igual lo ordena por la palabra
       if ($partidaUno["jugador"] == $partidaDos["jugador"]) {
           if ($partidaUno["palabraWordix"] == $partidaDos["palabraWordix"]) {
               $orden = 0;
+            // Ordena primero la la palbra de la partida uno
           } elseif ($partidaUno["palabraWordix"] < $partidaDos["palabraWordix"]) {
               $orden = -1;
+            // Ordena primero la la palbra de la partida dos
           } else {
               $orden = 1;
           }
+        // Ordena primero el nombre de la primer partida
       } elseif ($partidaUno["jugador"] < $partidaDos["jugador"]) {
           $orden = -1;
+        // Ordena primero el nombre de la segunda partida
       } else {
           $orden = 1;
       }
+      // Retornamos el orden 
       return $orden;
   }
   
-  
+  /** Esye modulo recibe un arreglo y lo ordena alfabeticamente
+   * @param string[] $coleccion
+   */
   function mostrarPartidasOrdenadas($coleccion)
   {
       // Función de comparación para uasort
