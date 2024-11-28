@@ -137,12 +137,12 @@ include_once("wordix.php");
                      // Solicitamos otro numero 
                      echo "Ingrese un número entre " . 0 . " y " . $numeroTotalDeArreglo . ": ";
                      // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
-                     $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo);
+                     $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo - 1);
                 }
             }while($terminar == false);
         }
 
-   /*     echo "num partida: ";
+        /*echo "num partida: ";
         $n = trim(fgets(STDIN));
 
      mostrarPartida($n);*/
@@ -465,27 +465,49 @@ do {
     switch ($opcion) {
         case 1: 
             $nombreUsuario = solicitarJugador();
-            do{
-                $correcto = false;
-                $i = 0;
-                $arregloPalabras = cargarColeccionPalabras();
-                $arregloPartidas = cargarPartidas();
-                $contadorArreglo = count($arregloPalabras);
-                echo "Ingrese un numero entre 0-" . $contadorArreglo . ": ";
-                $numeroElegido = solicitarNumeroEntre(0, $contadorArreglo);
+            $arregloPalabras = cargarColeccionPalabras();
+            $arregloPartidas = cargarPartidas();
+            $contadorArreglo = count($arregloPalabras);
+            
+            do {
+                 echo "Ingrese un número entre 0-" . ($contadorArreglo - 1) . ": ";
+                 $numeroElegido = solicitarNumeroEntre(0, $contadorArreglo - 1);
+                 $palabraSeleccionada = $arregloPalabras[$numeroElegido];
 
-                if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numeroElegido] && $arregloPartidas[$i]["jugador"] == $nombreUsuario){
-                    echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro numero.")."\n";
-                }else{
-                    $correcto = true;
-                }   
-                $i++;         
-            }while($correcto == false);
-            $partida = jugarWordix($arregloPalabras[$numeroElegido], strtolower($nombreUsuario));
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
+                 // Verificar si ya jugó con esta palabra
+                 $yaJugado = false;
+            foreach ($arregloPartidas as $partida) {
+                if ($partida["palabraWordix"] == $palabraSeleccionada && $partida["jugador"] == strtolower($nombreUsuario)) {
+                    echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro número.") . "\n";
+                    $yaJugado = true;
+                }
+            }
+        } while ($yaJugado == true);
 
-            break;
+        // Iniciar la partida con la palabra seleccionada
+        $partida = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
+        break;
         case 2: 
+            $nombreUsuario = solicitarJugador();
+            do{
+                $i = 0;
+                $correcto = false;
+            $arregloPalabras = cargarColeccionPalabras();
+            $arregloPartidas = cargarPartidas();
+
+            $contadorArreglo = count($arregloPalabras);
+            $numAleatorio = rand(0,$contadorArreglo);
+            if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numAleatorio] && $arregloPartidas[$i]["jugador"] == $nombreUsuario)
+            {
+               $correcto == false;
+               $numAleatorio = rand(0,$contadorArreglo);
+            } else {
+                $correcto = true;
+            }
+            $i++;
+            $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
+            }while($correcto == false);
+           
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
 
             break;
@@ -515,4 +537,3 @@ do {
             break;
     }
 } while ($opcion != 8);
-
