@@ -75,7 +75,7 @@ include_once("wordix.php");
         // int $numeroOpcion
 
         // Mostrar menú de opciones
-        echo "\n************MENU DE OPCIONES************\n";
+        echo "\n**************MENU DE OPCIONES**************\n";
         echo "1) Jugar al wordix con una palabra elegida\n";
         echo "2) Jugar al wordix con una palabra aleatoria\n";
         echo "3) Mostrar una partida\n";
@@ -123,12 +123,16 @@ include_once("wordix.php");
                 // Comprobamos si el numero esta en el rango de elemntos de nuestra colección de partidas
                 if($numeroPartida == 0 || $numeroPartida < $numeroTotalDeArreglo)
                 {
-                     echo "*****************************************************"."\n";
+                     echo "\n"."********************************************"."\n";
                      echo "Partida WORDIX " . $numeroPartida . ": palabra " . $llamarMod[$numeroPartida]["palabraWordix"]."\n";
                      echo "Jugador: " . $llamarMod[$numeroPartida]["jugador"]."\n";
                      echo "Puntaje: " . $llamarMod[$numeroPartida]["puntaje"]. " puntos"."\n";
-                     echo "Intento: " . $llamarMod[$numeroPartida]["intentos"]."\n";
-                     echo "*****************************************************";
+                     if($llamarMod[$numeroPartida]["puntaje"] > 0){
+                        echo "Intento: " . "Adivinó la palabra en " .$llamarMod[$numeroPartida]["intentos"]." intentos\n";
+                     }else{
+                        echo "Intento: No adivinó la palabra"."\n";
+                     }
+                     echo "********************************************"."\n";
                      
                      // Cambiamos la variable a true para terminar el while
                      $terminar = true;
@@ -258,16 +262,9 @@ print_r($e);*/
             // Cambiar variable a true para cortar el while
             $encontrado = true;
         }
-        // Sumar la variable a en caso que el nombre no se encuentre en la colección
-        elseif($arrayPartidas[$i]["jugador"] != $nombreJugador){
-            $a++;
-        }
+       
         // Sumar variable 
         $i++;
-    }
-    // Cambiar la variable retornada en caso que el nombre no este en la colección
-    if ($a == $contPartidas){
-     $indice = -2;
     }
 
     // Retornar la variable
@@ -468,6 +465,7 @@ do {
             $arregloPalabras = cargarColeccionPalabras();
             $arregloPartidas = cargarPartidas();
             $contadorArreglo = count($arregloPalabras);
+            $contadorArreglo2 = count($arregloPartidas);
             
             do {
                  echo "Ingrese un número entre 0-" . ($contadorArreglo - 1) . ": ";
@@ -482,11 +480,14 @@ do {
                     $yaJugado = true;
                 }
             }
-        } while ($yaJugado == true);
+            } while ($yaJugado == true);
 
-        // Iniciar la partida con la palabra seleccionada
-        $partida = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
-        break;
+            // Iniciar la partida con la palabra seleccionada
+            $partida = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
+            $arregloPartidas[$contadorArreglo2] = $partida;
+     
+            break;
+
         case 2: 
             $nombreUsuario = solicitarJugador();
             do{
@@ -508,15 +509,27 @@ do {
             $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
             }while($correcto == false);
            
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
+           
 
             break;
         case 3: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            $arregloPartidas = cargarPartidas(); 
+            $contadorArreglo = count($arregloPartidas);
+            echo "Ingrese un numero entre 0-" . $contadorArreglo-1 . ": ";
+            $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo - 1);
+            echo mostrarPartida($numeroDePartida);
 
             break;
         case 4: 
-            //...
+            $nombreUsuario = solicitarJugador();
+            $arregloPartidas = cargarPartidas();
+
+            $primerPartidaGanada = primerPartidaGanada($arregloPartidas, $nombreUsuario);
+            if($primerPartidaGanada != -1){
+                echo mostrarPartida($primerPartidaGanada);
+            } else {
+                echo "El jugador " . $nombreUsuario . " no ganó ninguna partida". "\n";
+            }
 
             break;
         case 5:
