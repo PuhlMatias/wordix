@@ -457,13 +457,31 @@ print_r($k);*/
 
 
 
-/*
+
 do {
     $opcion = seleccionarOpcion();
 
     
     switch ($opcion) {
         case 1: 
+            $nombreUsuario = solicitarJugador();
+            do{
+                $correcto = false;
+                $i = 0;
+                $arregloPalabras = cargarColeccionPalabras();
+                $arregloPartidas = cargarPartidas();
+                $contadorArreglo = count($arregloPalabras);
+                echo "Ingrese un numero entre 0-" . $contadorArreglo . ": ";
+                $numeroElegido = solicitarNumeroEntre(0, $contadorArreglo);
+
+                if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numeroElegido] && $arregloPartidas[$i]["jugador"] == $nombreUsuario){
+                    echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro numero.")."\n";
+                }else{
+                    $correcto = true;
+                }   
+                $i++;         
+            }while($correcto == false);
+            $partida = jugarWordix($arregloPalabras[$numeroElegido], strtolower($nombreUsuario));
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
 
             break;
@@ -498,4 +516,3 @@ do {
     }
 } while ($opcion != 8);
 
-*/
