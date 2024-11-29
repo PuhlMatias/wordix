@@ -281,7 +281,7 @@ print_r($k);*/
 
 // FUNCIÓN 9 RESUMEN JUGADOR
 
-/** Esta función muestra el resumen de un jugador
+/** Esta función retorna un arreglo con el resumen de un jugador
  * @param string[] $arrayPartidas
  * @param string $nombreJugador
  * @return array
@@ -344,6 +344,27 @@ print_r($k);*/
     
  }
 
+ // FUNCIÓN 9 EXTRA
+
+ /** Muestra el resumen
+  * @param string[] $estadisticas
+  */
+function resumen($estadisticas){
+    echo "\n"."********************************************"."\n";
+    echo "Jugador: " . $estadisticas["jugador"]."\n";
+    echo "Partidas: " . $estadisticas["partida"]."\n";
+    echo "Puntaje Total: " . $estadisticas["puntaje"]."\n";
+    echo "Victorias: " . $estadisticas["victorias"]."\n";
+    echo "Porcentaje de victorias: " . ($estadisticas["victorias"]*100)/$estadisticas["partida"]."%\n";
+    echo "Adivinadas:"."\n";
+    echo "    intento 1: " . $estadisticas["intento1"]."\n";
+    echo "    intento 2: " . $estadisticas["intento2"]."\n";
+    echo "    intento 3: " . $estadisticas["intento3"]."\n";
+    echo "    intento 4: " . $estadisticas["intento4"]."\n";
+    echo "    intento 5: " . $estadisticas["intento5"]."\n";
+    echo "    intento 6: " . $estadisticas["intento6"]."\n";
+    echo "********************************************"."\n";
+}
 /* $z = cargarPartidas();
  echo "Nombre: ";
  $x = trim(fgets(STDIN));
@@ -489,7 +510,7 @@ do {
             break;
 
         case 2: 
-            $nombreUsuario = solicitarJugador();
+            /*$nombreUsuario = solicitarJugador();
             do{
                 $i = 0;
                 $correcto = false;
@@ -511,7 +532,7 @@ do {
            
            
 
-            break;
+            break;*/
         case 3: 
             $arregloPartidas = cargarPartidas(); 
             $contadorArreglo = count($arregloPartidas);
@@ -533,7 +554,11 @@ do {
 
             break;
         case 5:
-            //
+            $nombreUsuario = solicitarJugador();
+            $arregloPartidas = cargarPartidas();
+
+            $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
+            resumen($mostrar);
 
             break;
         case 6: 
