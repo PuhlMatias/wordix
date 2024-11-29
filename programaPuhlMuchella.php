@@ -120,7 +120,7 @@ include_once("wordix.php");
 
           // Armamos un do while para que se repita en caso que el numero de partida no sea el correcto
           do{
-                // Comprobamos si el numero esta en el rango de elemntos de nuestra colección de partidas
+                // Comprobamos si el numero esta en el rango de elementos de nuestra colección de partidas
                 if($numeroPartida == 0 || $numeroPartida < $numeroTotalDeArreglo)
                 {
                      echo "\n"."********************************************"."\n";
@@ -210,7 +210,7 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
                 
     }while($repetida == true);
 
-     // Agregamos la palabra a la nueva coleccion
+     // Agregamos la palabra nueva a la colección
      $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
        
      // Retornamos la coleccion
@@ -349,7 +349,9 @@ print_r($k);*/
  /** Muestra el resumen
   * @param string[] $estadisticas
   */
-function resumen($estadisticas){
+function resumen($estadisticas)
+{
+    // Mostrar las estadisticas
     echo "\n"."********************************************"."\n";
     echo "Jugador: " . $estadisticas["jugador"]."\n";
     echo "Partidas: " . $estadisticas["partida"]."\n";
@@ -484,9 +486,11 @@ do {
         case 1: 
             // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
+
             // Llmamos a los arreglos de las palabras y las partidas
             $arregloPalabras = cargarColeccionPalabras();
             $arregloPartidas = cargarPartidas();
+
             // Contamos el total de los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
@@ -571,7 +575,7 @@ do {
             $nombreUsuario = solicitarJugador();
             // Llamamos al arreglo de partidas
             $arregloPartidas = cargarPartidas();
-            // Mostramos el resumen del ususario
+            // Mostramos el resumen del ususari 
             $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
             resumen($mostrar);
             break;
@@ -586,8 +590,10 @@ do {
 
             break;
         case 7:
-            //
-
+            $palabraIngresada = leerPalabra5Letras();
+            $arregloPartidas = cargarColeccionPalabras();
+            $arregloActualizado = agregarPalabra($arregloPartidas, strtoupper($palabraIngresada));
+            echo escribirVerde("¡Palabra agregada correctamente!"). "\n";
             break;
         case 8: 
             // Mostrar cartel de saliendo
