@@ -522,26 +522,26 @@ do {
 
 
         case 2: 
-            /*$nombreUsuario = solicitarJugador();
+            $nombreUsuario = solicitarJugador();
             do{
                 $i = 0;
                 $correcto = false;
-            $arregloPalabras = cargarColeccionPalabras();
-            $arregloPartidas = cargarPartidas();
+                $arregloPalabras = cargarColeccionPalabras();
+                $arregloPartidas = cargarPartidas();
 
-            $contadorArreglo = count($arregloPalabras);
-            $numAleatorio = rand(0,$contadorArreglo);
-            if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numAleatorio] && $arregloPartidas[$i]["jugador"] == $nombreUsuario)
-            {
-               $correcto == false;
-               $numAleatorio = rand(0,$contadorArreglo);
-            } else {
-                $correcto = true;
-            }
-            $i++;
-            $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
-            }while($correcto == false);
-            break;*/
+                $contadorArreglo = count($arregloPalabras);
+                $numAleatorio = rand(0,$contadorArreglo);
+                 if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numAleatorio] && $arregloPartidas[$i]["jugador"] == $nombreUsuario)
+                   {
+                        $correcto == false;
+                        $numAleatorio = rand(0,$contadorArreglo);
+                   } else {
+                        $correcto = true;
+                   } 
+                $i++;
+                $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
+            } while($correcto == false);
+            break;
 
 
         case 3: 
@@ -593,9 +593,12 @@ do {
 
             break;
         case 7:
+            // Solicitamos que ingrese una palabra
             $palabraIngresada = leerPalabra5Letras();
-            $arregloPartidas = cargarColeccionPalabras();
-            $arregloActualizado = agregarPalabra($arregloPartidas, strtoupper($palabraIngresada));
+            // Llamamos al arreglo de palabras
+            $arregloPalabras = cargarColeccionPalabras();
+            // Llamamos al modulo de agregarPalabra
+            $arregloActualizado = agregarPalabra($arregloPalabras, strtoupper($palabraIngresada));
             echo escribirVerde("¡Palabra agregada correctamente!"). "\n";
             break;
         case 8: 
