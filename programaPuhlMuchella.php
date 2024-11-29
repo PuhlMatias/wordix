@@ -463,8 +463,11 @@ function resumen($estadisticas)
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
 
-//Declaración de variables:
-
+// Declaración de variables:
+// int $contadorArreglo, $contadorArreglo2, $numeroElegido, $numAleatorio, $numeroDePartida, $primerPartidaGanada
+// string $solicitarJugador, $palabraSelecionada, $palabraIngresada
+// boolean $yaJugado, $correcto
+// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $arregloActualizado
 
 //Inicialización de variables:
 
@@ -575,7 +578,7 @@ do {
             $nombreUsuario = solicitarJugador();
             // Llamamos al arreglo de partidas
             $arregloPartidas = cargarPartidas();
-            // Mostramos el resumen del ususari 
+            // Mostramos el resumen del usuario
             $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
             resumen($mostrar);
             break;
@@ -586,7 +589,7 @@ do {
             $arregloPartidas = cargarPartidas();
 
             // Llamamos al modulo para ordenar el arreglo
-            $ordenadas = mostrarPartidasOrdenadas($arregloPartidas);
+            mostrarPartidasOrdenadas($arregloPartidas);
 
             break;
         case 7:
