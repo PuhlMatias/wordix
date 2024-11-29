@@ -445,7 +445,7 @@ function resumen($estadisticas){
    */
   function mostrarPartidasOrdenadas($coleccion)
   {
-      // Función de comparación para uasort
+      // Función de comparación definida por el usuario
       uasort($coleccion, 'compararPartidas');
       // Mostrar la colección ordenada
       print_r($coleccion);
@@ -482,15 +482,20 @@ do {
     
     switch ($opcion) {
         case 1: 
+            // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
+            // Llmamos a los arreglos de las palabras y las partidas
             $arregloPalabras = cargarColeccionPalabras();
             $arregloPartidas = cargarPartidas();
+            // Contamos el total de los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
             
             do {
+                 // Solicitamos que ingrese un numero 
                  echo "Ingrese un número entre 0-" . ($contadorArreglo - 1) . ": ";
                  $numeroElegido = solicitarNumeroEntre(0, $contadorArreglo - 1);
+                 // Variable que contiene la palabra elegida
                  $palabraSeleccionada = $arregloPalabras[$numeroElegido];
 
                  // Verificar si ya jugó con esta palabra
@@ -506,8 +511,8 @@ do {
             // Iniciar la partida con la palabra seleccionada
             $partida = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
             $arregloPartidas[$contadorArreglo2] = $partida;
-     
             break;
+
 
         case 2: 
             /*$nombreUsuario = solicitarJugador();
@@ -529,40 +534,55 @@ do {
             $i++;
             $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
             }while($correcto == false);
-           
-           
-
             break;*/
+
+
         case 3: 
+            // Llamamos al arrede partidas y lo contamos
             $arregloPartidas = cargarPartidas(); 
             $contadorArreglo = count($arregloPartidas);
+            // Solicitamos un numero 
             echo "Ingrese un numero entre 0-" . $contadorArreglo-1 . ": ";
             $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo - 1);
+
+            // Mostramos la partida con el numero seleccionado
             echo mostrarPartida($numeroDePartida);
-
             break;
-        case 4: 
-            $nombreUsuario = solicitarJugador();
-            $arregloPartidas = cargarPartidas();
 
+
+        case 4: 
+            // Solicitamos el nombre el usuario
+            $nombreUsuario = solicitarJugador();
+            // Llamamos al arreglo de partidas
+            $arregloPartidas = cargarPartidas();
+            // Mostramos la primer partida ganada por el usuario
             $primerPartidaGanada = primerPartidaGanada($arregloPartidas, $nombreUsuario);
             if($primerPartidaGanada != -1){
                 echo mostrarPartida($primerPartidaGanada);
+              // En caso que no tenga partidas ganadas mostramos un cartel
             } else {
                 echo "El jugador " . $nombreUsuario . " no ganó ninguna partida". "\n";
             }
-
             break;
-        case 5:
-            $nombreUsuario = solicitarJugador();
-            $arregloPartidas = cargarPartidas();
 
+
+        case 5:
+            // Solictamos el nombre al usuario
+            $nombreUsuario = solicitarJugador();
+            // Llamamos al arreglo de partidas
+            $arregloPartidas = cargarPartidas();
+            // Mostramos el resumen del ususario
             $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
             resumen($mostrar);
-
             break;
+
+
         case 6: 
-            //
+            // Llamamos al arreglo de partidas
+            $arregloPartidas = cargarPartidas();
+
+            // Llamamos al modulo para ordenar el arreglo
+            $ordenadas = mostrarPartidasOrdenadas($arregloPartidas);
 
             break;
         case 7:
