@@ -49,17 +49,27 @@ include_once("wordix.php");
        // string[] $arrayPartidas
 
        //Creamos un arreglo de ejemplos de partidas
-       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>0 ];
-       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>0 ];
-       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>13 ];
-       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>12 ];
-       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>6 ];
-       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "abril", "intentos"=> 2, "puntaje" =>16 ];
-       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "lauty", "intentos"=> 6, "puntaje" =>0 ];
-       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "martin", "intentos"=> 5, "puntaje" =>11 ];
-       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "abril", "intentos"=> 3, "puntaje" =>9 ];
-       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 2, "puntaje" =>15 ];
-       $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "agustin", "intentos"=> 4, "puntaje" =>9 ];
+       $arrayPartidas[0] = ["palabraWordix"=> "GOTAS" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>12 ];
+       $arrayPartidas[1] = ["palabraWordix"=> "QUESO" , "jugador" => "abril", "intentos"=> 6, "puntaje" =>10 ];
+       $arrayPartidas[2] = ["palabraWordix"=> "TINTO" , "jugador" => "agustin", "intentos"=> 3, "puntaje" =>15 ];
+       $arrayPartidas[3] = ["palabraWordix"=> "NAVES" , "jugador" => "lauty", "intentos"=> 4, "puntaje" =>14 ];
+       $arrayPartidas[4] = ["palabraWordix"=> "PISOS" , "jugador" => "martin", "intentos"=> 6, "puntaje" =>12 ];
+       $arrayPartidas[5] = ["palabraWordix"=> "MELON" , "jugador" => "abril", "intentos"=> 2, "puntaje" =>14 ];
+       $arrayPartidas[6] = ["palabraWordix"=> "YUYOS" , "jugador" => "lauty", "intentos"=> 6, "puntaje" =>12 ];
+       $arrayPartidas[7] = ["palabraWordix"=> "VERDE" , "jugador" => "martin", "intentos"=> 5, "puntaje" =>12 ];
+       $arrayPartidas[8] = ["palabraWordix"=> "PIANO" , "jugador" => "abril", "intentos"=> 3, "puntaje" =>13 ];
+       $arrayPartidas[9] = ["palabraWordix"=> "MUJER" , "jugador" => "matias", "intentos"=> 2, "puntaje" =>14 ];
+       $arrayPartidas[10] = ["palabraWordix"=> "RASGO" , "jugador" => "agustin", "intentos"=> 4, "puntaje" =>13 ];
+       $arrayPartidas[11] = ["palabraWordix"=> "HIELO" , "jugador" => "matias", "intentos"=> 0, "puntaje" =>0 ];
+       $arrayPartidas[12] = ["palabraWordix"=> "TARDE" , "jugador" => "abril", "intentos"=> 0, "puntaje" =>0 ];
+       $arrayPartidas[13] = ["palabraWordix"=> "SALTO" , "jugador" => "lauty", "intentos"=> 0, "puntaje" =>0 ];
+       $arrayPartidas[14] = ["palabraWordix"=> "FUEGO" , "jugador" => "martin", "intentos"=> 0, "puntaje" =>0 ];
+       $arrayPartidas[15] = ["palabraWordix"=> "HUEVO" , "jugador" => "abril", "intentos"=> 1, "puntaje" =>14 ];
+       $arrayPartidas[16] = ["palabraWordix"=> "TINTO" , "jugador" => "lauty", "intentos"=> 3, "puntaje" =>15 ];
+       $arrayPartidas[17] = ["palabraWordix"=> "CLIMA" , "jugador" => "martin", "intentos"=> 5, "puntaje" =>10 ];
+       $arrayPartidas[18] = ["palabraWordix"=> "HIELO" , "jugador" => "abril", "intentos"=> 3, "puntaje" =>11 ];
+       $arrayPartidas[19] = ["palabraWordix"=> "VERDE" , "jugador" => "matias", "intentos"=> 6, "puntaje" =>11 ];
+       $arrayPartidas[20] = ["palabraWordix"=> "SALTO" , "jugador" => "matias", "intentos"=> 5, "puntaje" =>12 ];
     
        // Retornamos el arreglo
        return $arrayPartidas;
@@ -145,12 +155,7 @@ include_once("wordix.php");
             }while($terminar == false);
         }
 
-        /*echo "num partida: ";
-        $n = trim(fgets(STDIN));
 
-     mostrarPartida($n);*/
-
-       
 
 // FUNCIÓN 7 AGREGAR PALABRA
 
@@ -217,15 +222,6 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
 
 }
 
-/*echo "Palabra: ";
-$r = trim(fgets(STDIN));
-
-$g = cargarColeccionPalabras();
-
-$e = agregarPalabra($g, $r);
-
-print_r($e);*/
-
 
 // FUNCIÓN 8 PRIMER PARTIDA GANADA
 
@@ -270,13 +266,6 @@ print_r($e);*/
     return $indice;
  }
 
-/*$f = cargarPartidas();
-echo "Ingrese un nombre para ver su primer partida ganada: ";
-$m = trim(fgets(STDIN));
-
-$k = primerPartidaGanada($f, $m);
-
-print_r($k);*/
 
 // FUNCIÓN 9 RESUMEN JUGADOR
 
@@ -370,14 +359,6 @@ function resumen($estadisticas)
     echo "    intento 6: " . $estadisticas["intento6"]."\n";
     echo "********************************************"."\n";
 }
-/* $z = cargarPartidas();
- echo "Nombre: ";
- $x = trim(fgets(STDIN));
-
- $c = mostrarResumen($z, $x);
-
- print_r($c);*/
-
 
 
 // FUNCIÓN 10 SOLICITAR NOMBRE 
@@ -455,8 +436,6 @@ function resumen($estadisticas)
       // Mostrar la colección ordenada
       print_r($coleccion);
   }
-  /*$t = cargarPartidas();
-  mostrarPartidasOrdenadas($t);*/
 
 
 /* ****COMPLETAR***** */
