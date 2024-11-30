@@ -116,42 +116,37 @@ include_once("wordix.php");
    * @param string[] $llamarMod
    */
 
-   function mostrarPartida($numeroPartida, $llamarMod)
-       {
-          // string[] $llamarMod
-          // int $numeroTotalDeArreglo
-          // boolean $terminar
-          
-          // Contamos el total de elementos del arreglo
-          $numeroTotalDeArreglo = count($llamarMod);
-          
-          // Asignamos a una variable la condición false
-          $terminar = false;
-
-          // Armamos un do while para que se repita en caso que el numero de partida no sea el correcto
-          do{
+  
+        function mostrarPartida($numeroPartida, $arreglo){ 
+            // Contamos el total de elementos del arreglo
+            $contArr = count($arreglo);
+        
+            // Asignamos a una variable la condición false
+            $terminar = false;
+        
+            // Armamos un do while para que se repita en caso que el numero de partida no sea el correcto
+            do{
                 // Comprobamos si el numero esta en el rango de elementos de nuestra colección de partidas
-                if($numeroPartida == 0 || $numeroPartida < $numeroTotalDeArreglo)
-                {
-                     echo "\n"."********************************************"."\n";
-                     echo "Partida WORDIX " . $numeroPartida . ": palabra " . $llamarMod[$numeroPartida]["palabraWordix"]."\n";
-                     echo "Jugador: " . $llamarMod[$numeroPartida]["jugador"]."\n";
-                     echo "Puntaje: " . $llamarMod[$numeroPartida]["puntaje"]. " puntos"."\n";
-                     if($llamarMod[$numeroPartida]["puntaje"] > 0){
-                        echo "Intento: " . "Adivinó la palabra en " .$llamarMod[$numeroPartida]["intentos"]." intentos\n";
-                     }else{
+                if($numeroPartida == 0 || $numeroPartida < $contArr){
+                     echo "\n"."********************************************\n";
+                     echo "Partida WORDIX " . $numeroPartida . ": palabra " . $arreglo[$numeroPartida]["palabraWordix"]."\n";
+                     echo "Jugador: " . $arreglo[$numeroPartida]["jugador"]."\n";
+                     echo "Puntaje: " . $arreglo[$numeroPartida]["puntaje"]. " puntos"."\n";
+                     if($arreglo[$numeroPartida]["puntaje"] > 0){
+                        echo "Intento: " . "Adivinó la palabra en " .$arreglo[$numeroPartida]["intentos"]." intentos\n";
+                    }else{
                         echo "Intento: No adivinó la palabra"."\n";
-                     }
-                     echo "********************************************"."\n";
-                     
-                     // Cambiamos la variable a true para terminar el while
+                    }
+                     echo "********************************************\n";
+        
+                    // Cambiamos la variable a true para terminar el while
                      $terminar = true;
                 } else {
                      echo escribirRojo("Número incorrecto.")."\n";
                      // Solicitamos otro numero 
-                     echo "Ingrese un número entre " . 0 . " y " . $numeroTotalDeArreglo-1 . ": ";
+                     echo "Ingrese un número entre " . 0 . " y " . $contArr-1 . ": ";
                      // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
-                     $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo - 1);
+                     $numeroPartida = solicitarNumeroEntre(0,$contArr - 1);
                 }
             }while($terminar == false);
         }
@@ -239,9 +234,9 @@ function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
 
     // Iniciamos la variable que vamos a retornar en -1
     $indice = -1;
-    // Iniciamos 2 variables en 0
+    // Iniciamos la variable en 0
     $i = 0;
-    $a = 0;
+
     //Contamos el arreglo
     $contPartidas = count($arrayPartidas);
     // Iniamos una variable en falso
@@ -350,7 +345,11 @@ function resumen($estadisticas)
     echo "Partidas: " . $estadisticas["partida"]."\n";
     echo "Puntaje Total: " . $estadisticas["puntaje"]."\n";
     echo "Victorias: " . $estadisticas["victorias"]."\n";
+    if($estadisticas["victorias"] > 0){
     echo "Porcentaje de victorias: " . ($estadisticas["victorias"]*100)/$estadisticas["partida"]."%\n";
+    } else {
+    echo "Porcentaje de victorias: " . "No gano ninguna partida"."\n";
+    }
     echo "Adivinadas:"."\n";
     echo "    intento 1: " . $estadisticas["intento1"]."\n";
     echo "    intento 2: " . $estadisticas["intento2"]."\n";
