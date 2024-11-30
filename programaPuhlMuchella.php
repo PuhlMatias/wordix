@@ -316,19 +316,23 @@ print_r($k);*/
              $partidasTotales++;
 
              // Sumamos el intento cada vez que haya ganado uno en el mismo
-             switch($arrayPartidas[$i]["intentos"]){ 
-                case 1:$estadisticasJugador["intento1"]++;
-                break;
-                case 2:$estadisticasJugador["intento2"]++;
-                break;
-                case 3:$estadisticasJugador["intento3"]++;
-                break;
-                case 4:$estadisticasJugador["intento4"]++;
-                break;
-                case 5:$estadisticasJugador["intento5"]++;
-                break;
-                case 6:$estadisticasJugador["intento6"] ++;
-                break; 
+             if($arrayPartidas[$i]["puntaje"] > 0)
+            {
+               switch($arrayPartidas[$i]["intentos"])
+                { 
+                  case 1:$estadisticasJugador["intento1"]++;
+                  break;
+                  case 2:$estadisticasJugador["intento2"]++;
+                  break;
+                  case 3:$estadisticasJugador["intento3"]++;
+                  break;
+                  case 4:$estadisticasJugador["intento4"]++;
+                  break;
+                  case 5:$estadisticasJugador["intento5"]++;
+                  break;
+                  case 6:$estadisticasJugador["intento6"] ++;
+                  break; 
+                }
             }
         }      
     }
