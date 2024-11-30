@@ -466,7 +466,7 @@ function resumen($estadisticas)
  $arregloPartidas = cargarPartidas();
 
 do {
-    // Llamamos al modulo del menú
+    // Llamamos al módulo del menú
     $opcion = seleccionarOpcion();
 
 
@@ -505,7 +505,7 @@ do {
 
 
         case 2: 
-            // Solocitar el nombre al usuario
+            // Solicitar el nombre al usuario
             $nombreUsuario = solicitarJugador();
             // Contamos los dos arreglos
             $contadorArreglo = count($arregloPalabras);
@@ -551,8 +551,8 @@ do {
             // Contamos el arreglo 
             $contadorArreglo = count($arregloPartidas);
             
-            // Solicitamos un numero 
-            echo "Ingrese un numero entre 0-" . $contadorArreglo-1 . ": ";
+            // Solicitamos un número 
+            echo "Ingrese un número entre 0-" . $contadorArreglo-1 . ": ";
             $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo-1);
 
             // Mostramos la partida con el numero seleccionado
@@ -564,11 +564,11 @@ do {
             // Solicitamos el nombre el usuario
             $nombreUsuario = solicitarJugador();
             
-            // Mostramos la primer partida ganada por el usuario
+            // Mostramos la primera partida ganada por el usuario
             $primerPartidaGanada = primerPartidaGanada($arregloPartidas, $nombreUsuario);
             if($primerPartidaGanada != -1){
                 echo mostrarPartida($primerPartidaGanada, $arregloPartidas);
-              // En caso que no tenga partidas ganadas mostramos un cartel
+              // En caso que no tenga partidas ganadas mostramos un mensaje
             } else {
                 echo escribirRojo("El jugador " . $nombreUsuario . " no ganó ninguna partida"). "\n";
             }
@@ -576,7 +576,7 @@ do {
 
 
         case 5:
-            // Solictamos el nombre al usuario
+            // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
           
             // Mostramos el resumen del usuario
@@ -602,7 +602,7 @@ do {
 
 
         case 8: 
-            // Mostrar cartel de saliendo
+            // Mostramos mensaje de salida
             echo "Saliendo...";
             break;
     }
