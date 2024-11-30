@@ -31,6 +31,7 @@ include_once("wordix.php");
         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
         "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
         "TARDE", "SALTO", "CLIMA", "TENIS", "HIELO"
+        
     ];
     
     // Retornamos el arreglo
@@ -101,16 +102,14 @@ include_once("wordix.php");
 
   /** Este modulo recibe un numero y muestra por pantalla una partida
    * @param int $numeroPartida
+   * @param string[] $llamarMod
    */
 
-   function mostrarPartida($numeroPartida)
+   function mostrarPartida($numeroPartida, $llamarMod)
        {
           // string[] $llamarMod
           // int $numeroTotalDeArreglo
           // boolean $terminar
-
-          // LLamamos al modulo de partidas
-          $llamarMod = cargarPartidas();
           
           // Contamos el total de elementos del arreglo
           $numeroTotalDeArreglo = count($llamarMod);
@@ -139,7 +138,7 @@ include_once("wordix.php");
                 } else {
                      echo escribirRojo("Número incorrecto.")."\n";
                      // Solicitamos otro numero 
-                     echo "Ingrese un número entre " . 0 . " y " . $numeroTotalDeArreglo . ": ";
+                     echo "Ingrese un número entre " . 0 . " y " . $numeroTotalDeArreglo-1 . ": ";
                      // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
                      $numeroPartida = solicitarNumeroEntre(0,$numeroTotalDeArreglo - 1);
                 }
@@ -467,7 +466,7 @@ function resumen($estadisticas)
 // int $contadorArreglo, $contadorArreglo2, $numeroElegido, $numAleatorio, $numeroDePartida, $primerPartidaGanada
 // string $solicitarJugador, $palabraSelecionada, $palabraIngresada
 // boolean $yaJugado, $correcto
-// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $arregloActualizado
+// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $arregloActualizado, $partidaJugada
 
 //Inicialización de variables:
 
@@ -479,20 +478,19 @@ function resumen($estadisticas)
 //imprimirResultado($partida);
 
 
-
+ // Llmamos a los arreglos de las palabras y las partidas
+ $arregloPalabras = cargarColeccionPalabras();
+ $arregloPartidas = cargarPartidas();
 
 do {
+    // Llamamos al modulo del menú
     $opcion = seleccionarOpcion();
 
-    
+
     switch ($opcion) {
         case 1: 
             // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
-
-            // Llmamos a los arreglos de las palabras y las partidas
-            $arregloPalabras = cargarColeccionPalabras();
-            $arregloPartidas = cargarPartidas();
 
             // Contamos el total de los dos arreglos
             $contadorArreglo = count($arregloPalabras);
@@ -505,6 +503,7 @@ do {
                  // Variable que contiene la palabra elegida
                  $palabraSeleccionada = $arregloPalabras[$numeroElegido];
 
+
                  // Verificar si ya jugó con esta palabra
                  $yaJugado = false;
             foreach ($arregloPartidas as $partida) {
@@ -516,56 +515,63 @@ do {
             } while ($yaJugado == true);
 
             // Iniciar la partida con la palabra seleccionada
-            $partida = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
-            $arregloPartidas[$contadorArreglo2] = $partida;
+            $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
+            $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
 
 
         case 2: 
             $nombreUsuario = solicitarJugador();
-            do{
-                $i = 0;
-                $correcto = false;
-                $arregloPalabras = cargarColeccionPalabras();
-                $arregloPartidas = cargarPartidas();
+            $contadorArreglo = count($arregloPalabras);
+            $contadorArreglo2 = count($arregloPartidas);
+            $palabraSeleccionada = "";
+            $correcto = false;
+            while(!$correcto){
 
-                $contadorArreglo = count($arregloPalabras);
-                $numAleatorio = rand(0,$contadorArreglo);
-                 if($arregloPartidas[$i]["palabraWordix"] == $arregloPalabras[$numAleatorio] && $arregloPartidas[$i]["jugador"] == $nombreUsuario)
-                   {
-                        $correcto == false;
-                        $numAleatorio = rand(0,$contadorArreglo);
-                   } else {
-                        $correcto = true;
-                   } 
-                $i++;
-                $partida = jugarWordix($arregloPalabras[$numAleatorio], strtolower($nombreUsuario));
-            } while($correcto == false);
+                $correcto2 = false;
+
+                $numAleatorio = rand(0,$contadorArreglo-1);
+                $palabraActual = $arregloPalabras[$numAleatorio];
+
+                foreach ($arregloPartidas as $indice)
+                {
+                    if ($indice["palabraWordix"] == $palabraActual && $indice["jugador"] == $nombreUsuario) {
+                        $correcto2 = true;
+                    } 
+                }
+                if (!$correcto2) {
+                    $palabraSeleccionada = $palabraActual;
+                    $correcto = true;
+                }
+
+            } 
+
+            $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
+            $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
 
 
         case 3: 
-            // Llamamos al arrede partidas y lo contamos
-            $arregloPartidas = cargarPartidas(); 
+            // Contamos el arreglo 
             $contadorArreglo = count($arregloPartidas);
+            
             // Solicitamos un numero 
             echo "Ingrese un numero entre 0-" . $contadorArreglo-1 . ": ";
-            $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo - 1);
+            $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo-1);
 
             // Mostramos la partida con el numero seleccionado
-            echo mostrarPartida($numeroDePartida);
+            echo mostrarPartida($numeroDePartida, $arregloPartidas);
             break;
 
 
         case 4: 
             // Solicitamos el nombre el usuario
             $nombreUsuario = solicitarJugador();
-            // Llamamos al arreglo de partidas
-            $arregloPartidas = cargarPartidas();
+            
             // Mostramos la primer partida ganada por el usuario
             $primerPartidaGanada = primerPartidaGanada($arregloPartidas, $nombreUsuario);
             if($primerPartidaGanada != -1){
-                echo mostrarPartida($primerPartidaGanada);
+                echo mostrarPartida($primerPartidaGanada, $arregloPartidas);
               // En caso que no tenga partidas ganadas mostramos un cartel
             } else {
                 echo "El jugador " . $nombreUsuario . " no ganó ninguna partida". "\n";
@@ -576,8 +582,7 @@ do {
         case 5:
             // Solictamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
-            // Llamamos al arreglo de partidas
-            $arregloPartidas = cargarPartidas();
+          
             // Mostramos el resumen del usuario
             $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
             resumen($mostrar);
@@ -585,8 +590,7 @@ do {
 
 
         case 6: 
-            // Llamamos al arreglo de partidas
-            $arregloPartidas = cargarPartidas();
+            
 
             // Llamamos al modulo para ordenar el arreglo
             mostrarPartidasOrdenadas($arregloPartidas);
@@ -595,10 +599,9 @@ do {
         case 7:
             // Solicitamos que ingrese una palabra
             $palabraIngresada = leerPalabra5Letras();
+
             // Llamamos al arreglo de palabras
-            $arregloPalabras = cargarColeccionPalabras();
-            // Llamamos al modulo de agregarPalabra
-            $arregloActualizado = agregarPalabra($arregloPalabras, strtoupper($palabraIngresada));
+            $arregloPalabras = agregarPalabra($arregloPalabras, strtoupper($palabraIngresada));
             echo escribirVerde("¡Palabra agregada correctamente!"). "\n";
             break;
         case 8: 
@@ -607,3 +610,4 @@ do {
             break;
     }
 } while ($opcion != 8);
+?>
