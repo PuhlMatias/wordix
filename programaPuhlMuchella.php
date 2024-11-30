@@ -316,7 +316,7 @@ print_r($k);*/
              $partidasTotales++;
 
              // Sumamos el intento cada vez que haya ganado uno en el mismo
-             switch($arrayPartidas[$i]["intentos"]){ //segun el numero que me devuelve lo que haya en esa posicion: 
+             switch($arrayPartidas[$i]["intentos"]){ 
                 case 1:$estadisticasJugador["intento1"]++;
                 break;
                 case 2:$estadisticasJugador["intento2"]++;
@@ -505,14 +505,14 @@ do {
 
 
                  // Verificar si ya jugó con esta palabra
-                 $yaJugado = false;
+                 $correcto = false;
             foreach ($arregloPartidas as $partida) {
                 if ($partida["palabraWordix"] == $palabraSeleccionada && $partida["jugador"] == strtolower($nombreUsuario)) {
                     echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro número.") . "\n";
-                    $yaJugado = true;
+                    $correcto = true;
                 }
             }
-            } while ($yaJugado == true);
+            } while ($correcto == true);
 
             // Iniciar la partida con la palabra seleccionada
             $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
@@ -574,7 +574,7 @@ do {
                 echo mostrarPartida($primerPartidaGanada, $arregloPartidas);
               // En caso que no tenga partidas ganadas mostramos un cartel
             } else {
-                echo "El jugador " . $nombreUsuario . " no ganó ninguna partida". "\n";
+                echo escribirRojo("El jugador " . $nombreUsuario . " no ganó ninguna partida"). "\n";
             }
             break;
 
