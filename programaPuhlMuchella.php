@@ -8,7 +8,8 @@ include_once("wordix.php");
 /**************************************/
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
-/* ****COMPLETAR***** */
+/* Puhl Matías Sebastián--legajo FAI-5605--Tecnicatura en desarrollo web--GitHub: PuhlMatias */
+/* Muchella Aldana Abril--legajo FAI-5574--Tecnicatura en desarrollo web--GitHub: abril12345678 */
 
 
 /**************************************/
