@@ -330,17 +330,20 @@ function esIntentoGanado($estructuraPalabraIntento)
     return $ganado;
 }
 
-/**
+/** Calcula el puntaje total
 * @param int $nro
 * @param string $palabra
 * @return int
 */
 
 function obtenerPuntajeWordix($nro, $palabra){
+    // Iniciamos el puntaje en 0
     $puntaje=0;
     $puntaje += 7-$nro;
+    // Contamos el total de letras de la palabra
     $n = strlen($palabra);
     $i=0;
+    // Sumar el puntaje 
     for($i=0; $i<$n; $i++){
         if ($palabra[$i]=="A" || $palabra[$i]=="E" || $palabra[$i]=="I" || $palabra[$i]=="O" || $palabra[$i]=="U"){
             $puntaje++;
@@ -351,6 +354,7 @@ function obtenerPuntajeWordix($nro, $palabra){
             $puntaje+=3;
         }
     }
+    // Rtornar el puntaje 
     return $puntaje;
  }
 
