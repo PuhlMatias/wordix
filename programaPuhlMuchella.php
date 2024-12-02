@@ -367,7 +367,7 @@ function mostrarPartidasOrdenadas($coleccion)
 // int $contadorArreglo, $contadorArreglo2, $numeroElegido, $numAleatorio, $numeroDePartida, $primerPartidaGanada
 // string $nombreUsuario, $palabraSelecionada, $palabraIngresada
 // boolean $correcto
-// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $partidaJugada
+// string[] $arregloPalabras, $arregloPartidas, $mostrar, $partidaJugada
 
 //Proceso:
 
