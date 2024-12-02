@@ -366,7 +366,7 @@ function mostrarPartidasOrdenadas($coleccion)
 // Declaración de variables:
 // int $contadorArreglo, $contadorArreglo2, $numeroElegido, $numAleatorio, $numeroDePartida, $primerPartidaGanada
 // string $nombreUsuario, $palabraSelecionada, $palabraIngresada
-// boolean $correcto, $palabraCorrecta
+// boolean $correcto
 // string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $partidaJugada
 
 //Proceso:
@@ -380,13 +380,14 @@ do {
     $opcion = seleccionarOpcion();
 
     switch ($opcion) {
-        case 1: 
+        case 1: // Jugar wordix con palabra elegida
             // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
             // Contamos el total de los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
-            
+            // Iniciar variable en 0
+            $i = 0;
             do {
                  // Solicitamos que ingrese un numero 
                  echo "Ingrese un número entre 0-" . ($contadorArreglo - 1) . ": ";
@@ -396,11 +397,12 @@ do {
 
                  // Verificar si ya jugó con esta palabra
                  $correcto = false;
-                 foreach ($arregloPartidas as $partida) {
-                    if ($partida["palabraWordix"] == $palabraSeleccionada && $partida["jugador"] == strtolower($nombreUsuario)) {
+                 while($i < $contadorArreglo2 && !$correcto) {
+                    if ($arregloPartidas[$i]["palabraWordix"] == $palabraSeleccionada && $arregloPartidas[$i]["jugador"] == strtolower($nombreUsuario)) {
                         echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro número.") . "\n";
                         $correcto = true;
                     }
+                    $i++;
             }
             } while ($correcto == true);
             // Iniciar la partida con la palabra seleccionada
@@ -409,45 +411,37 @@ do {
             $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
 
-        case 2: 
+        case 2: // Jugar wordix con palabra aleatoria 
             // Solicitar el nombre al usuario
             $nombreUsuario = solicitarJugador();
             // Contamos los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
-            // Iniciamos variable como un texto
-            $palabraSeleccionada = "";
-            // Iniciamos variable en falso
-            $correcto = false;
-
-            // Creamos un ciclo while para verificar si ya jugó con la palabra random
-            while(!$correcto){
+            do{
                 // Iniciamos variable en falso
-                $palabraCorrecta = false;
+                $correcto = false;
                 // Variable con número random
                 $numAleatorio = rand(0,$contadorArreglo-1);
                 // Palabra con el número random
                 $palabraActual = $arregloPalabras[$numAleatorio];
-                // Comprobar si el usuario ya jugó con la palabra
-                foreach ($arregloPartidas as $indice)
-                {
-                    if ($indice["palabraWordix"] == $palabraActual && $indice["jugador"] == $nombreUsuario) {
-                        $palabraCorrecta = true;
+                // Iniciamos variable en 0
+                $i = 0;
+                // Comprobar si ya jugó con la palabra
+                while($i < $contadorArreglo2 && !$correcto){
+                    if ($arregloPartidas[$i]["palabraWordix"] == $palabraActual && $arregloPartidas[$i]["jugador"] == $nombreUsuario) {
+                        $correcto = true;
                     } 
+                    $i++;
                 }
-                // Actualizar variable de la palabra
-                if (!$palabraCorrecta) {
-                    $palabraSeleccionada = $palabraActual;
-                    $correcto = true;
-                }
-            } 
+    
+            } while ($correcto == true);
             // Iniciar la partida con la palabra seleccionada
-            $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
+            $partidaJugada = jugarWordix($palabraActual, strtolower($nombreUsuario));
             // Actualizar el arreglo de partidas 
             $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
 
-        case 3: 
+        case 3: // Mostrar una partida
             // Contamos el arreglo 
             $contadorArreglo = count($arregloPartidas);           
             // Solicitamos un número 
@@ -457,7 +451,7 @@ do {
             echo mostrarPartida($numeroDePartida, $arregloPartidas);
             break;
 
-        case 4: 
+        case 4: // Mostrar la primer partida ganadora
             // Solicitamos el nombre el usuario
             $nombreUsuario = solicitarJugador();   
             // Mostramos la primera partida ganada por el usuario
@@ -470,7 +464,7 @@ do {
             }
             break;
 
-        case 5:
+        case 5: // Mostrar resumen de jugador 
             // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();         
             // Mostramos el resumen del usuario
@@ -478,12 +472,12 @@ do {
             resumen($mostrar);
             break;
 
-        case 6: 
+        case 6: // Mostrar listado de partidas ordenada por jugardor y por palabra
             // Llamamos al modulo para ordenar el arreglo
             mostrarPartidasOrdenadas($arregloPartidas);
             break;
 
-        case 7:
+        case 7: // Agregar una palabra de 5 letras
             // Solicitamos que ingrese una palabra
             $palabraIngresada = leerPalabra5Letras();
             // Llamamos al arreglo de palabras
@@ -491,7 +485,7 @@ do {
             echo escribirVerde("¡Palabra agregada correctamente!"). "\n";
             break;
 
-        case 8: 
+        case 8: // Salir
             // Mostramos mensaje de salida
             echo "Saliendo...";
             break;
