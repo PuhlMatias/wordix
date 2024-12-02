@@ -11,7 +11,6 @@ include_once("wordix.php");
 /* Puhl Matías Sebastián--legajo FAI-5605--Tecnicatura en desarrollo web--GitHub: PuhlMatias */
 /* Muchella Aldana Abril--legajo FAI-5574--Tecnicatura en desarrollo web--GitHub: abril12345678 */
 
-
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
@@ -33,15 +32,12 @@ include_once("wordix.php");
         "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
         "TARDE", "SALTO", "CLIMA", "TENIS", "HIELO"
         
-    ];
-    
+    ]; 
     // Retornamos el arreglo
     return ($coleccionPalabras);
   }
 
-
 // FUNCIÓN 2 COLECCION DE PARTIDAS 
-
   /** Este modulo retorna un arreglo de ejemplos de partidas
    * @return array
    */
@@ -77,11 +73,9 @@ include_once("wordix.php");
    }
 
 // FUNCIÓN 3 MENU DE OPCIONES
-
 /** Este modulo muestra un menu de opciones
  * @return int
 */
-
  function seleccionarOpcion()
  {
         // int $numeroOpcion
@@ -105,235 +99,161 @@ include_once("wordix.php");
         return $numeroOpcion;
  }
 
- 
 // FUNCIÓN 4 leerPalabra5Letras (WORDIX)
 // FUNCIÓN 5 solicitarNumeroEntre (WORDIX)
 
 // FUNCIÓN 6 MOSTRAR PARTIDA
-
   /** Este modulo recibe un numero y muestra por pantalla una partida
    * @param int $numeroPartida
-   * @param string[] $llamarMod
+   * @param string[] $arreglo
    */
-
-  
-        function mostrarPartida($numeroPartida, $arreglo){ 
-            // Contamos el total de elementos del arreglo
-            $contArr = count($arreglo);
-        
-            // Asignamos a una variable la condición false
-            $terminar = false;
-        
-            // Armamos un do while para que se repita en caso que el numero de partida no sea el correcto
-            do{
-                // Comprobamos si el numero esta en el rango de elementos de nuestra colección de partidas
-                if($numeroPartida == 0 || $numeroPartida < $contArr){
-                     echo "\n"."********************************************\n";
-                     echo "Partida WORDIX " . $numeroPartida . ": palabra " . $arreglo[$numeroPartida]["palabraWordix"]."\n";
-                     echo "Jugador: " . $arreglo[$numeroPartida]["jugador"]."\n";
-                     echo "Puntaje: " . $arreglo[$numeroPartida]["puntaje"]. " puntos"."\n";
-                     if($arreglo[$numeroPartida]["puntaje"] > 0){
-                        echo "Intento: " . "Adivinó la palabra en " .$arreglo[$numeroPartida]["intentos"]." intentos\n";
-                    }else{
-                        echo "Intento: No adivinó la palabra"."\n";
-                    }
-                     echo "********************************************\n";
-        
-                    // Cambiamos la variable a true para terminar el while
-                     $terminar = true;
-                } else {
-                     echo escribirRojo("Número incorrecto.")."\n";
-                     // Solicitamos otro numero 
-                     echo "Ingrese un número entre " . 0 . " y " . $contArr-1 . ": ";
-                     // Solicitamos que seleccione un numero entre un rango determinado usando el modulo de WORDIX
-                     $numeroPartida = solicitarNumeroEntre(0,$contArr - 1);
-                }
-            }while($terminar == false);
-        }
-
-
+function mostrarPartida($numeroPartida, $arreglo)
+{ 
+    //mostramos los datos de la partida elegida
+    echo "\n"."********************************************\n";
+    echo "Partida WORDIX " . $numeroPartida . ": palabra " . $arreglo[$numeroPartida]["palabraWordix"]."\n";
+    echo "Jugador: " . $arreglo[$numeroPartida]["jugador"]."\n";
+    echo "Puntaje: " . $arreglo[$numeroPartida]["puntaje"]. " puntos"."\n";
+    //si el puntaje es mayor a 0, mostramos el intento en el cual gano, sino mencionamos que no adivino la palabra
+    if($arreglo[$numeroPartida]["puntaje"] > 0){
+        echo "Intento: " . "Adivinó la palabra en " .$arreglo[$numeroPartida]["intentos"]." intentos\n";
+    }else{
+        echo "Intento: No adivinó la palabra"."\n";
+    }
+    echo "********************************************\n";
+}
 
 // FUNCIÓN 7 AGREGAR PALABRA
-
 /** Esta funcion agrega una palabra nueva a una colección y retorna la colección actualizada
- * @param string[] $coleccionPalabrasNuevo
- * @param string $palabraNueva
+ * @param string[] $arreglo
+ * @param string $palabra
  * @return array
-*/
-
-function agregarPalabra($coleccionPalabrasNuevo, $palabraNueva)
-{
+ */
+function agregarPalabra($arreglo, $palabra){
     // int $i, $contArreglo
-    // boolean $repetida, $verificacionPalabra
-
+    
     // Variable iniciada en 0
     $i = 0;      
     // Contamos el total del arreglo 
-    $contArreglo = count($coleccionPalabrasNuevo);
-    // Verificamos la palabra
-    do{
-     // Iniciamos una variable en falso
-     $repetida = false;      
-     // Verificamos si la palabra es una palabra con el modulo de WORDIX
-     $verificacionPalabra = esPalabra($palabraNueva);    
-     // Si la verificacion es falsa pide una palabra nueva
-     if($verificacionPalabra == false || strlen($palabraNueva) != 5)
-        {
-            // Mostramos un error en la palabra
-            echo escribirRojo("Palabra incorrecta.")."\n";
-            // Solicitamos palabra nueva con el modulo de WORDIX
-            $palabraNueva = leerPalabra5Letras();
-            // Cambiamos la variable repetida a true
-            $repetida = true;
-        } else // Si la verificacion es verdadera, verificamos que la palabra no este en la colección
-        {
-            // Bucle que verifica la palabra
-            while ($i < $contArreglo && $repetida == false)
-            {
-                // Verificamos si son iguales
-                if($coleccionPalabrasNuevo[$i] == strtoupper($palabraNueva))
-                    {
-                        // Si son iguales cambiamos la variable repetida a true
-                        $repetida = true;
-                        // Volvemos la variable $i a 0
-                        $i = 0;
+    $contArreglo = count($arreglo);
+    // recorrido total para verificar que no se repite la palabra
+    for ($i=0; $i < $contArreglo; $i++){
+       // Verificamos si son iguales
+       if($arreglo[$i] == strtoupper($palabra)){
+           // Mostramos un cartel que la palabra esta repetida y volvemos a solicitar otra palabra
+           echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
+           $palabra = leerPalabra5Letras();
+           //reseteamos el contador para que la palabra nueva recorra el bucle
+           $i = 0;
+       }
+    }
+    // Agregamos la palabra nueva a la colección
+    $arreglo[$contArreglo] = strtoupper($palabra);
+    // Retornamos la coleccion
+    return $arreglo;
+   }
 
-                        // Mostramos un cartel que la palabra esta repetida y volvemos a solicitar otra palabra
-                        echo escribirRojo("Esta palabra ya esta en la colección. Intente con otra.")."\n";
-                        $palabraNueva = leerPalabra5Letras();
-                    } else {
-                        // Si son desiguales sumamos la variable $i
-                        $i++;
-                    }
-            }
-        }
-                
-    }while($repetida == true);
-
-     // Agregamos la palabra nueva a la colección
-     $coleccionPalabrasNuevo[$contArreglo] = strtoupper($palabraNueva);
-       
-     // Retornamos la coleccion
-     return $coleccionPalabrasNuevo;
-
-}
-
-
-// FUNCIÓN 8 PRIMER PARTIDA GANADA
-
+ // FUNCIÓN 8 PRIMER PARTIDA GANADA
 /** Este modulo muestra la primer partida ganada
- * @param string[] $arrayPartidas
- * @param string $nombreJugador
+ * @param string[] $arreglo
+ * @param string $nombre
  * @return string
  */
-
- function primerPartidaGanada($arrayPartidas, $nombreJugador)
- {
+function primerPartidaGanada($arreglo, $nombre){
     // int $indice, $i, $a, $contPartidas
     // boolean $encontrado
-
     // Iniciamos la variable que vamos a retornar en -1
     $indice = -1;
     // Iniciamos la variable en 0
     $i = 0;
-
     //Contamos el arreglo
-    $contPartidas = count($arrayPartidas);
+    $contPartidas = count($arreglo);
     // Iniamos una variable en falso
     $encontrado = false;
-
     // Verificacion 
     while ($i < $contPartidas && !$encontrado)
     {
         // Comprobar que el nombre esta en la colección
-        if($arrayPartidas[$i]["jugador"] == strtolower($nombreJugador) && $arrayPartidas[$i]["puntaje"] > 0)
+        if($arreglo[$i]["jugador"] == strtolower($nombre) && $arreglo[$i]["puntaje"] > 0)
         {
-            // Actualizamos las variables
+            // guardamos el indice de la partida
             $indice = $i;
             // Cambiar variable a true para cortar el while
             $encontrado = true;
         }
-       
         // Sumar variable 
         $i++;
     }
-
     // Retornar la variable
     return $indice;
  }
 
-
 // FUNCIÓN 9 RESUMEN JUGADOR
-
 /** Esta función retorna un arreglo con el resumen de un jugador
- * @param string[] $arrayPartidas
- * @param string $nombreJugador
+ * @param string[] $arreglo
+ * @param string $jugador
  * @return array
  */
-
- function mostrarResumen($arrayPartidas, $nombreJugador)
- {
+function mostrarResumen($arreglo, $jugador){
+    //int $puntajeTotal, $partidasGanadas, $partidasTotales, $contPartidas
     // Inicializamos variables en 0
     $puntajeTotal = 0;
     $partidasTotales = 0;
-    $contPartidasGanadas = 0;
+    $partidasGanadas = 0;
 
     // Contamos el total de la colección
-    $contPartidas = count($arrayPartidas);
+    $contPartidas = count($arreglo);
     // Creamos el arreglo iniciado en 0 para despues cambiarlo
-    $estadisticasJugador = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0, "intento1" =>0, "intento2" =>0, "intento3" =>0, "intento4" =>0, "intento5" =>0, "intento6" =>0];
+    $estadisticas = [ "jugador" =>0, "partida" =>0, "puntaje" =>0,  "victorias" =>0, "intento1" =>0, "intento2" =>0, "intento3" =>0, "intento4" =>0, "intento5" =>0, "intento6" =>0];
     
     // Recorremos el total del arreglo, sacando las estadisticas
-    for($i=0; $i<$contPartidas; $i++)
-    {
+    for($i=0; $i<$contPartidas; $i++){
         // Sumamos la variable contadora si encuentra una partida ganada
-        if($arrayPartidas[$i]["puntaje"] > 0 && strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
+        if($arreglo[$i]["puntaje"] > 0 && strtolower($jugador) == $arreglo[$i]["jugador"])
         {
-             $contPartidasGanadas++;
+             $partidasGanadas++;
         }
          // Actualizamos variables si el nombre es igual
-        if(strtolower($nombreJugador) == $arrayPartidas[$i]["jugador"])
+        if(strtolower($jugador) == $arreglo[$i]["jugador"])
         {    // Sumamos el total de los puntajes 
-             $puntaje = $arrayPartidas[$i]["puntaje"];
+             $puntaje = $arreglo[$i]["puntaje"];
              $puntajeTotal += $puntaje;
 
              // Sumamos las partidas totales
              $partidasTotales++;
 
              // Sumamos el intento cada vez que haya ganado uno en el mismo
-             if($arrayPartidas[$i]["puntaje"] > 0)
+             if($arreglo[$i]["puntaje"] > 0)
             {
-               switch($arrayPartidas[$i]["intentos"])
+               switch($arreglo[$i]["intentos"])
                 { 
-                  case 1:$estadisticasJugador["intento1"]++;
+                  case 1:$estadisticas["intento1"]++;
                   break;
-                  case 2:$estadisticasJugador["intento2"]++;
+                  case 2:$estadisticas["intento2"]++;
                   break;
-                  case 3:$estadisticasJugador["intento3"]++;
+                  case 3:$estadisticas["intento3"]++;
                   break;
-                  case 4:$estadisticasJugador["intento4"]++;
+                  case 4:$estadisticas["intento4"]++;
                   break;
-                  case 5:$estadisticasJugador["intento5"]++;
+                  case 5:$estadisticas["intento5"]++;
                   break;
-                  case 6:$estadisticasJugador["intento6"] ++;
+                  case 6:$estadisticas["intento6"]++;
                   break; 
                 }
             }
         }      
     }
         // Actualizamos las estadisticas 
-        $estadisticasJugador["jugador"] = $nombreJugador;
-        $estadisticasJugador["partida"] = $partidasTotales;
-        $estadisticasJugador["puntaje"] = $puntajeTotal;
-        $estadisticasJugador["victorias"] = $contPartidasGanadas;
+        $estadisticas["jugador"] = $jugador;
+        $estadisticas["partida"] = $partidasTotales;
+        $estadisticas["puntaje"] = $puntajeTotal;
+        $estadisticas["victorias"] = $partidasGanadas;
        
         // Retornamos el arreglo
-        return $estadisticasJugador;
-    
+        return $estadisticas;
  }
 
  // FUNCIÓN 9 EXTRA
-
  /** Muestra el resumen
   * @param string[] $estadisticas
   */
@@ -360,17 +280,18 @@ function resumen($estadisticas)
     echo "********************************************"."\n";
 }
 
-
 // FUNCIÓN 10 SOLICITAR NOMBRE 
-
 /** Esta funcion solicita un nombre y lo retora en minúscula
  * @return string
  */
-
- function  solicitarJugador()
+function  solicitarJugador()
  {
     // Verificar que el primer caracter sea una letra
     do{
+        // boolean $correcto, $esLetra
+        // string $jugador
+        // int $caracteres
+
         // Variable iniciada en falso
         $correcto = false;
         //Solicitamos el nombre del jugador 
@@ -388,7 +309,6 @@ function resumen($estadisticas)
             echo escribirRojo("El primer caracter debe ser una letra")."\n";
         }
 
-
     }while($correcto == false);
     // Retornamos el nombre en minúscula
     return strtolower($jugador);
@@ -401,8 +321,7 @@ function resumen($estadisticas)
   * @param string[] $partidaDos
   * @return int
   */
-
-  function compararPartidas($partidaUno, $partidaDos)
+function compararPartidas($partidaUno, $partidaDos)
   {
       // Si el jugador es igual lo ordena por la palabra
       if ($partidaUno["jugador"] == $partidaDos["jugador"]) {
@@ -426,20 +345,19 @@ function resumen($estadisticas)
       return $orden;
   }
   
-  /** Esye modulo recibe un arreglo y lo ordena alfabeticamente
+  /** Este modulo recibe un arreglo y lo ordena alfabeticamente
    * @param string[] $coleccion
    */
-  function mostrarPartidasOrdenadas($coleccion)
-  {
+function mostrarPartidasOrdenadas($coleccion)
+   {
       // Función de comparación definida por el usuario
       uasort($coleccion, 'compararPartidas');
       // Mostrar la colección ordenada
       print_r($coleccion);
-  }
+   }
 
 
 /* ****COMPLETAR***** */
-
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -447,19 +365,11 @@ function resumen($estadisticas)
 
 // Declaración de variables:
 // int $contadorArreglo, $contadorArreglo2, $numeroElegido, $numAleatorio, $numeroDePartida, $primerPartidaGanada
-// string $solicitarJugador, $palabraSelecionada, $palabraIngresada
+// string $nombreUsuario, $palabraSelecionada, $palabraIngresada
 // boolean $correcto, $palabraCorrecta
-// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $arregloActualizado, $partidaJugada
-
-//Inicialización de variables:
-
+// string[] $arregloPalabras, $arregloPartidas, $partida, $mostrar, $partidaJugada
 
 //Proceso:
-
-//$partida = jugarWordix("MELON", strtolower("MaJo"));
-//print_r($partida);
-//imprimirResultado($partida);
-
 
  // Llmamos a los arreglos de las palabras y las partidas
  $arregloPalabras = cargarColeccionPalabras();
@@ -469,12 +379,10 @@ do {
     // Llamamos al módulo del menú
     $opcion = seleccionarOpcion();
 
-
     switch ($opcion) {
         case 1: 
             // Solicitamos el nombre al usuario
             $nombreUsuario = solicitarJugador();
-
             // Contamos el total de los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
@@ -486,23 +394,20 @@ do {
                  // Variable que contiene la palabra elegida
                  $palabraSeleccionada = $arregloPalabras[$numeroElegido];
 
-
-            // Verificar si ya jugó con esta palabra
-            $correcto = false;
-            foreach ($arregloPartidas as $partida) {
-                if ($partida["palabraWordix"] == $palabraSeleccionada && $partida["jugador"] == strtolower($nombreUsuario)) {
-                    echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro número.") . "\n";
-                    $correcto = true;
-                }
+                 // Verificar si ya jugó con esta palabra
+                 $correcto = false;
+                 foreach ($arregloPartidas as $partida) {
+                    if ($partida["palabraWordix"] == $palabraSeleccionada && $partida["jugador"] == strtolower($nombreUsuario)) {
+                        echo escribirRojo("¡Ya jugaste con esta palabra " . $nombreUsuario . "! Intenta con otro número.") . "\n";
+                        $correcto = true;
+                    }
             }
             } while ($correcto == true);
-
             // Iniciar la partida con la palabra seleccionada
             $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
             // Actualizar el arreglo de partidas
             $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
-
 
         case 2: 
             // Solicitar el nombre al usuario
@@ -510,7 +415,6 @@ do {
             // Contamos los dos arreglos
             $contadorArreglo = count($arregloPalabras);
             $contadorArreglo2 = count($arregloPartidas);
-
             // Iniciamos variable como un texto
             $palabraSeleccionada = "";
             // Iniciamos variable en falso
@@ -524,7 +428,6 @@ do {
                 $numAleatorio = rand(0,$contadorArreglo-1);
                 // Palabra con el número random
                 $palabraActual = $arregloPalabras[$numAleatorio];
-
                 // Comprobar si el usuario ya jugó con la palabra
                 foreach ($arregloPartidas as $indice)
                 {
@@ -532,13 +435,11 @@ do {
                         $palabraCorrecta = true;
                     } 
                 }
-
                 // Actualizar variable de la palabra
                 if (!$palabraCorrecta) {
                     $palabraSeleccionada = $palabraActual;
                     $correcto = true;
                 }
-
             } 
             // Iniciar la partida con la palabra seleccionada
             $partidaJugada = jugarWordix($palabraSeleccionada, strtolower($nombreUsuario));
@@ -546,24 +447,19 @@ do {
             $arregloPartidas[$contadorArreglo2] = $partidaJugada;
             break;
 
-
         case 3: 
             // Contamos el arreglo 
-            $contadorArreglo = count($arregloPartidas);
-            
+            $contadorArreglo = count($arregloPartidas);           
             // Solicitamos un número 
             echo "Ingrese un número entre 0-" . $contadorArreglo-1 . ": ";
             $numeroDePartida = solicitarNumeroEntre(0, $contadorArreglo-1);
-
             // Mostramos la partida con el numero seleccionado
             echo mostrarPartida($numeroDePartida, $arregloPartidas);
             break;
 
-
         case 4: 
             // Solicitamos el nombre el usuario
-            $nombreUsuario = solicitarJugador();
-            
+            $nombreUsuario = solicitarJugador();   
             // Mostramos la primera partida ganada por el usuario
             $primerPartidaGanada = primerPartidaGanada($arregloPartidas, $nombreUsuario);
             if($primerPartidaGanada != -1){
@@ -574,32 +470,26 @@ do {
             }
             break;
 
-
         case 5:
             // Solicitamos el nombre al usuario
-            $nombreUsuario = solicitarJugador();
-          
+            $nombreUsuario = solicitarJugador();         
             // Mostramos el resumen del usuario
             $mostrar = mostrarResumen($arregloPartidas, $nombreUsuario);
             resumen($mostrar);
             break;
-
 
         case 6: 
             // Llamamos al modulo para ordenar el arreglo
             mostrarPartidasOrdenadas($arregloPartidas);
             break;
 
-
         case 7:
             // Solicitamos que ingrese una palabra
             $palabraIngresada = leerPalabra5Letras();
-
             // Llamamos al arreglo de palabras
             $arregloPalabras = agregarPalabra($arregloPalabras, strtoupper($palabraIngresada));
             echo escribirVerde("¡Palabra agregada correctamente!"). "\n";
             break;
-
 
         case 8: 
             // Mostramos mensaje de salida

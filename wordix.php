@@ -337,9 +337,8 @@ function esIntentoGanado($estructuraPalabraIntento)
 */
 
 function obtenerPuntajeWordix($nro, $palabra){
-    // Iniciamos el puntaje en 0
-    $puntaje=0;
-    $puntaje += 7-$nro;
+    // Iniciamos el puntaje partiendo de su valor segun el intento ganado
+    $puntaje = 7-$nro;
     // Contamos el total de letras de la palabra
     $n = strlen($palabra);
     $i=0;
